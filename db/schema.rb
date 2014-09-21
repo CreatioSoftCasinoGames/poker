@@ -11,7 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140921193140) do
+ActiveRecord::Schema.define(version: 20140921200411) do
+
+  create_table "rooms", force: true do |t|
+    t.string   "name"
+    t.decimal  "min_stake",   precision: 10, scale: 0
+    t.decimal  "max_stake",   precision: 10, scale: 0
+    t.decimal  "min_buy_in",  precision: 10, scale: 0
+    t.decimal  "max_buy_in",  precision: 10, scale: 0
+    t.integer  "max_players"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
