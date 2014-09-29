@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  resources :tables
+
+  resources :table_configs
+
   resources :rooms
 
   devise_for :users

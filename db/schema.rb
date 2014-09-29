@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140921200411) do
+ActiveRecord::Schema.define(version: 20140929184147) do
 
   create_table "rooms", force: true do |t|
     t.string   "name"
@@ -24,19 +24,58 @@ ActiveRecord::Schema.define(version: 20140921200411) do
     t.datetime "updated_at"
   end
 
+  create_table "table_config_users", force: true do |t|
+    t.integer  "table_config_id"
+    t.integer  "user_id"
+    t.boolean  "active"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "table_configs", force: true do |t|
+    t.string   "name"
+    t.decimal  "small_blind", precision: 10, scale: 0
+    t.decimal  "big_blind",   precision: 10, scale: 0
+    t.integer  "min_player"
+    t.integer  "max_player"
+    t.decimal  "min_buy_in",  precision: 10, scale: 0
+    t.decimal  "max_buy_in",  precision: 10, scale: 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "table_users", force: true do |t|
+    t.integer  "table_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tables", force: true do |t|
+    t.string   "name"
+    t.integer  "table_config_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "users", force: true do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
+    t.string   "email",                  default: "",       null: false
+    t.string   "encrypted_password",     default: "",       null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
+    t.integer  "sign_in_count",          default: 0,        null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "fb_id"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "role",                   default: "PLAYER"
+    t.boolean  "is_guest"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

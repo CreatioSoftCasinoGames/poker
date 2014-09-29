@@ -1,0 +1,35 @@
+- model_class = TableConfig
+div class="page-header"
+  h1=t '.title', :default => model_class.model_name.human.pluralize.titleize
+table class="table table-striped"
+  thead
+    tr
+      th= model_class.human_attribute_name(:id)
+      th= model_class.human_attribute_name(:name)
+      th= model_class.human_attribute_name(:small_blind)
+      th= model_class.human_attribute_name(:big_blind)
+      th= model_class.human_attribute_name(:min_player)
+      th= model_class.human_attribute_name(:max_player)
+      th= model_class.human_attribute_name(:min_buy_in)
+      th= model_class.human_attribute_name(:max_buy_in)
+      th= model_class.human_attribute_name(:created_at)
+      th=t '.actions', :default => t("helpers.actions")
+  tbody
+    - @table_configs.each do |table_config|
+      tr
+        td= link_to table_config.id, table_config_path(table_config)
+        td= table_config.name
+        td= table_config.small_blind
+        td= table_config.big_blind
+        td= table_config.min_player
+        td= table_config.max_player
+        td= table_config.min_buy_in
+        td= table_config.max_buy_in
+        td=l table_config.created_at
+        td
+          = link_to t('.edit', :default => t("helpers.links.edit")), edit_table_config_path(table_config), :class => 'btn btn-default btn-xs'
+          '
+          = link_to t('.destroy', :default => t("helpers.links.destroy")), table_config_path(table_config), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-xs btn-danger'
+
+= link_to t('.new', :default => t("helpers.links.new")), new_table_config_path, :class => 'btn btn-primary'
+

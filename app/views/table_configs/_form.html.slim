@@ -1,0 +1,41 @@
+= form_for @table_config, html: { class: "form form-horizontal table_config" } do |f|
+  .form-group
+    = f.label :name, :class => 'control-label col-lg-2'
+    .col-lg-10
+      = f.text_field :name, :class => 'form-control'
+    = f.error_span(:name)
+  .form-group
+    = f.label :small_blind, :class => 'control-label col-lg-2'
+    .col-lg-10
+      = f.text_field :small_blind, :class => 'form-control'
+    = f.error_span(:small_blind)
+  .form-group
+    = f.label :big_blind, :class => 'control-label col-lg-2'
+    .col-lg-10
+      = f.text_field :big_blind, :class => 'form-control'
+    = f.error_span(:big_blind)
+  .form-group
+    = f.label :min_player, :class => 'control-label col-lg-2'
+    .col-lg-10
+      = f.text_field :min_player, :class => 'form-control'
+    = f.error_span(:min_player)
+  .form-group
+    = f.label :max_player, :class => 'control-label col-lg-2'
+    .col-lg-10
+      = f.text_field :max_player, :class => 'form-control'
+    = f.error_span(:max_player)
+  .form-group
+    = f.label :min_buy_in, :class => 'control-label col-lg-2'
+    .col-lg-10
+      = f.text_field :min_buy_in, :class => 'form-control'
+    = f.error_span(:min_buy_in)
+  .form-group
+    = f.label :max_buy_in, :class => 'control-label col-lg-2'
+    .col-lg-10
+      = f.text_field :max_buy_in, :class => 'form-control'
+    = f.error_span(:max_buy_in)
+  .form-group
+    .col-lg-offset-2.col-lg-10
+      = f.submit nil, :class => 'btn btn-primary'
+      '
+      = link_to t('.cancel', :default => t("helpers.links.cancel")), table_configs_path, :class => 'btn'
