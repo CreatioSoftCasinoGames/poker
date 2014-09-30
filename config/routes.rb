@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :table_configs
+      resources :users
+      resources :sessions, :only => [:create]
     end
   end
 
