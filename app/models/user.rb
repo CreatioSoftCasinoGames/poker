@@ -9,4 +9,8 @@ class User < ActiveRecord::Base
   has_many :table_users
   has_many :tables, through: :table_users
 
+  def preferred_table_config_id
+  	table_config_users.where(active: true).first.try(:table_config_id)
+  end
+
 end
