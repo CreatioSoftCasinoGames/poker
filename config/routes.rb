@@ -15,6 +15,9 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :table_configs
       resources :users
+      resources :tables do
+        get :assign, on: :collection
+      end
       resources :sessions, only: [:create]
       resources :table_config_users, only: [:create]
     end
