@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  table_id: 1
+  round_name: MyString
+  current_player_id: 1
+  pot_value: 9.99
+  deck: MyText
+
+two:
+  table_id: 1
+  round_name: MyString
+  current_player_id: 1
+  pot_value: 9.99
+  deck: MyText

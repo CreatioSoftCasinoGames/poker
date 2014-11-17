@@ -8,6 +8,8 @@ class User < ActiveRecord::Base
   has_many :table_configs, through: :table_config_users
   has_many :table_users
   has_many :tables, through: :table_users
+  has_many :game_users
+  has_many :games, through: :game_users
 
   def preferred_table_config
     table_config_users.where(active: true).first
@@ -19,7 +21,6 @@ class User < ActiveRecord::Base
 
   def get_table
     tables = Table.where(table_config_id: @user.preferred_table_config_id)
-    
   end
 
 end
