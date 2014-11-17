@@ -6,7 +6,7 @@ class CreateGames < ActiveRecord::Migration
       t.integer :current_user_id
       t.decimal :pot_value
       t.text :deck
-      t.active :boolean
+      t.boolean :active
 
       t.timestamps
     end

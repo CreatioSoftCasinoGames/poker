@@ -11,11 +11,42 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140929191309) do
+ActiveRecord::Schema.define(version: 20141117085610) do
 
   create_table "api_keys", force: true do |t|
     t.string   "token"
     t.boolean  "active",     default: true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "game_users", force: true do |t|
+    t.integer  "game_id"
+    t.integer  "user_id"
+    t.string   "cards"
+    t.integer  "seat_occcupied_index"
+    t.boolean  "is_waiting"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "games", force: true do |t|
+    t.integer  "table_id"
+    t.string   "round_name"
+    t.integer  "current_user_id"
+    t.decimal  "pot_value",       precision: 10, scale: 0
+    t.text     "deck"
+    t.boolean  "active"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "moves", force: true do |t|
+    t.string   "action"
+    t.integer  "user_id"
+    t.decimal  "remaining_chips", precision: 10, scale: 0
+    t.decimal  "bet_amount",      precision: 10, scale: 0
+    t.integer  "game_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
