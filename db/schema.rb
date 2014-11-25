@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141117085610) do
+ActiveRecord::Schema.define(version: 20141125100657) do
 
   create_table "api_keys", force: true do |t|
     t.string   "token"
@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 20141117085610) do
     t.boolean  "active"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "uuid"
   end
 
   create_table "moves", force: true do |t|
@@ -49,6 +50,11 @@ ActiveRecord::Schema.define(version: 20141117085610) do
     t.integer  "game_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "board"
+    t.string   "round_bets"
+    t.string   "round_max_bet"
+    t.decimal  "pot",             precision: 10, scale: 0
+    t.integer  "next_user_id"
   end
 
   create_table "rooms", force: true do |t|
