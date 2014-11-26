@@ -8,4 +8,17 @@ class Game < ActiveRecord::Base
 
 	accepts_nested_attributes_for :game_users
 
+	def analize(data)
+		self.active = false
+		self.game_users_attributes = data.collect do |node_obj|
+			game_user = game_users.where(user_id: node_obj['playerId']).first
+			{
+				id: game_user.id,
+				is_winner: true,
+				winner_prize: node_obj['amount']
+			}
+		end 
+		self.save
+	end
+
 end

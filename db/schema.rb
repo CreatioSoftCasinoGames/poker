@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141125100657) do
+ActiveRecord::Schema.define(version: 20141126081858) do
 
   create_table "api_keys", force: true do |t|
     t.string   "token"
@@ -28,6 +28,8 @@ ActiveRecord::Schema.define(version: 20141125100657) do
     t.boolean  "is_waiting"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "is_winner",                                     default: false
+    t.decimal  "winner_prize",         precision: 10, scale: 0
   end
 
   create_table "games", force: true do |t|
