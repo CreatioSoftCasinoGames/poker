@@ -1,0 +1,28 @@
+common: &default_settings
+  :access_key_id: <%= API_CONFIG['amazon_access_key'] %>
+  :secret_access_key: <%= API_CONFIG['amazon_access_secret'] %>
+  :bucket: <%= API_CONFIG['amazon_bucket_name'] %>
+
+production: &production
+
+  :users:
+    :image:
+      :storage: !ruby/symbol s3
+      :s3_protocol: :http
+      :s3_credentials:
+        <<: *default_settings
+      :s3_permissions:
+        :avatar: :public_read
+      :default_url: '/assets/missing.png'
+      :styles:
+        :avatar: '48x48>'
+      :url: ":s3_domain_url"
+      :path: 'images/:id/:style/:basename.:extension'
+      :convert_options:
+        :all: '-strip -auto-orient -colorspace sRGB'
+
+development:
+  <<: *production
+
+test:
+  <<: *production

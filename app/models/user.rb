@@ -11,6 +11,10 @@ class User < ActiveRecord::Base
   has_many :game_users
   has_many :games, through: :game_users
 
+  has_attached_file :file,
+    Poker::Configuration.paperclip_options[:users][:image]
+
+
   def preferred_table_config
     table_config_users.where(active: true).first
   end

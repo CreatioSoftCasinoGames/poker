@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141126081858) do
+ActiveRecord::Schema.define(version: 20141127074551) do
 
   create_table "api_keys", force: true do |t|
     t.string   "token"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 20141126081858) do
     t.datetime "updated_at"
     t.boolean  "is_winner",                                     default: false
     t.decimal  "winner_prize",         precision: 10, scale: 0
+    t.decimal  "investment",           precision: 10, scale: 0
   end
 
   create_table "games", force: true do |t|
@@ -105,12 +106,12 @@ ActiveRecord::Schema.define(version: 20141126081858) do
   end
 
   create_table "users", force: true do |t|
-    t.string   "email",                  default: "",       null: false
-    t.string   "encrypted_password",     default: "",       null: false
+    t.string   "email",                                           default: "",       null: false
+    t.string   "encrypted_password",                              default: "",       null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,        null: false
+    t.integer  "sign_in_count",                                   default: 0,        null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -120,8 +121,11 @@ ActiveRecord::Schema.define(version: 20141126081858) do
     t.string   "fb_id"
     t.string   "first_name"
     t.string   "last_name"
-    t.string   "role",                   default: "PLAYER"
+    t.string   "role",                                            default: "PLAYER"
     t.boolean  "is_guest"
+    t.decimal  "chips",                  precision: 10, scale: 0
+    t.decimal  "xp",                     precision: 10, scale: 0
+    t.decimal  "diamonds",               precision: 10, scale: 0
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
