@@ -6,7 +6,7 @@ class GameEndWorker
   def perform(data)
   	data = JSON.parse(data)
     game = Game.where(uuid: data['game_uuid']).first
-    game.analize(data['winners'])
+    game.analize(data['players'])
   end
   
 end

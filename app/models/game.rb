@@ -10,30 +10,29 @@ class Game < ActiveRecord::Base
 	accepts_nested_attributes_for :users
 
 	def analize(data)
-		# self.active = false
-		# self.game_users_attributes = 
-		# self.game_users.each do |game_user|
-		# 	if game_user.user_id == node_obj['playerId'].to_i
-				
-		# 	else
-		# 	end
-		# end
-		# data.collect do |node_obj|
-		# 	game_user = game_users.where(user_id: ).first
-		# 	{
-		# 		id: game_user.id,
-		# 		is_winner: true,
-		# 		winner_prize: node_obj['amount']
-		# 	}
-		# end
-		# self.users_attributes = self.game_users.collect do |game_user|
-		# 	user = game_user.user
-		# 	{
-		# 		id: user.id,
-		# 		chips: user.chips + game_user.winner_prize.to_f
-		# 	}
-		# end
-		# self.save
+		params = {active: false}
+		game_users_attributes = []
+		users_attributes = []
+
+		data.each do |node_obj|
+			game_user = game_users.where(user_id: node_obj['playerId']).first
+			user = game_user.user
+			game_users_attributes.push({
+				id: game_user.id,
+				is_winner: node_obj['isWinner'],
+				winner_prize: node_obj['winnerPrize'],
+				hand_rank: node_obj['handRank'],
+				hand_message: node_obj['handMessage'],
+				remaining_chips: node_obj['remainingChips']
+			})
+			users_attributes.push({
+				id: user.id,
+				chips: user.chips - game_user.round_chips + node_obj['remainingChips']
+			})
+		end
+		params[:game_users_attributes] = game_users_attributes
+		params[:users_attributes] = users_attributes
+		self.update_attributes(params)
 	end
 
 end
