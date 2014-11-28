@@ -1,22 +1,17 @@
-# # rails_root = ENV['RAILS_ROOT'] || File.dirname(__FILE__) + '/../..'
-# # rails_env = ENV['RAILS_ENV'] || 'development'
-# # 
-# # resque_config = YAML.load_file(rails_root + '/config/resque.yml')
-# # Resque.redis = resque_config[rails_env]
-# # Resque.redis.namespace = "resque:gina_puffin_feeder"
-# Sidekiq.configure_server do |config|
-#   if Rails.env == 'development'
-#     config.redis = { :url => 'redis://localhost:6379/12'}
-#   else
-#     config.redis = { :url => 'redis://feeder-vm.gina.alaska.edu:6379/12'}
-#   end
-# end
+## For more details refer to: http://tsamni.com/post/84515089035/sidekiq-performing-background-or-delayed-jobs-with
+# config/initializers/sidekiq.rb
 
-# # # When in Unicorn, this block needs to go in unicorn's `after_fork` callback:
-# # Sidekiq.configure_client do |config|
-# #   if Rails.env == 'development'
-# #     config.redis = { :url => 'redis://localhost:6379/12', :namespace => "feeder_development" }
-# #   else
-# #     config.redis = { :url => 'redis://feeder-vm.gina.alaska.edu:6379/12', :namespace => "feeder_production" }
-# #   end
-# # end
+rails_root = Rails.root || File.dirname(__FILE__) + '/../..'
+rails_env = Rails.env || 'development'
+ 
+redis_config = YAML.load_file(rails_root.to_s + '/config/redis.yml')
+redis_config.merge! redis_config.fetch(Rails.env, {})
+redis_config.symbolize_keys!
+ 
+Sidekiq.configure_server do |config|
+  config.redis = { :url => "redis://#{redis_config[:host]}:#{redis_config[:port]}/0" }
+end
+ 
+Sidekiq.configure_client do |config|
+  config.redis = { :url => "redis://#{redis_config[:host]}:#{redis_config[:port]}/0" }
+end

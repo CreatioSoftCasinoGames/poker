@@ -18,8 +18,8 @@ class Api::V1::UsersController < Api::V1::ApplicationController
 	end
 
 	def update
-		@user = User.where(user_params).first
-		if @user.update_attributes(image: params[:image])
+		@user = User.where(id: params[:id]).first
+		if @user.update_attributes(user_params)
 			render json: {
 				user: @user,
 				valid: true
@@ -31,6 +31,11 @@ class Api::V1::UsersController < Api::V1::ApplicationController
 				errors: @user.errors.full_messages.join(", ")
 			}
 		end
+	end
+
+	def show
+		@user = User.where(id: params[:id]).first
+		render json: @user
 	end
 
 	private
