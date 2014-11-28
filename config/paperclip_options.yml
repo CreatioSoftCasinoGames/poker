@@ -15,7 +15,7 @@ production: &production
         :avatar: :public_read
       :default_url: '/assets/missing.png'
       :styles:
-        :avatar: '48x48>'
+        :avatar: '455x455>'
       :url: ":s3_domain_url"
       :path: 'images/:id/:style/:basename.:extension'
       :convert_options:

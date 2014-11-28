@@ -11,9 +11,10 @@ class User < ActiveRecord::Base
   has_many :game_users
   has_many :games, through: :game_users
 
-  has_attached_file :file,
+  has_attached_file :image,
     Poker::Configuration.paperclip_options[:users][:image]
 
+  validates_attachment :image, content_type: { content_type: /\Aimage\/.*\Z/ }
 
   def preferred_table_config
     table_config_users.where(active: true).first

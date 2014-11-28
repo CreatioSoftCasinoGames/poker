@@ -1,0 +1,9 @@
+development:
+  amazon_bucket_name: pokers-dev
+  amazon_access_key: AKIAJVII7JL457FNV7VQ
+  amazon_access_secret: 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
+
+production:
+  amazon_bucket_name: pokers-prod
+  amazon_access_key: AKIAJVII7JL457FNV7VQ
+  amazon_access_secret: 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
