@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141128084858) do
+ActiveRecord::Schema.define(version: 20141202064059) do
 
   create_table "api_keys", force: true do |t|
     t.string   "token"
@@ -133,6 +133,7 @@ ActiveRecord::Schema.define(version: 20141128084858) do
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
+    t.integer  "device_avatar_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

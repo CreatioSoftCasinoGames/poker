@@ -16,6 +16,10 @@ class User < ActiveRecord::Base
 
   validates_attachment :image, content_type: { content_type: /\Aimage\/.*\Z/ }
 
+  def full_name
+    [first_name, last_name].join(" ")
+  end
+
   def preferred_table_config
     table_config_users.where(active: true).first
   end
