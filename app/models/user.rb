@@ -16,6 +16,12 @@ class User < ActiveRecord::Base
 
   validates_attachment :image, content_type: { content_type: /\Aimage\/.*\Z/ }
 
+  before_create :set_joining_bonus
+
+  def avatar
+    self.image? ? image.url(:avatar) : nil
+  end
+
   def full_name
     [first_name, last_name].join(" ")
   end
@@ -30,6 +36,12 @@ class User < ActiveRecord::Base
 
   def get_table
     tables = Table.where(table_config_id: @user.preferred_table_config_id)
+  end
+
+  private
+
+  def set_joining_bonus
+    self.chips = 10000
   end
 
 end
