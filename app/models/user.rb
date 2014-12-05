@@ -22,6 +22,10 @@ class User < ActiveRecord::Base
     self.image? ? image.url(:avatar) : nil
   end
 
+  def player_since
+    created_at.strftime("%B,%Y")
+  end
+
   def full_name
     [first_name, last_name].join(" ")
   end

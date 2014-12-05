@@ -9,7 +9,7 @@ class Table < ActiveRecord::Base
 
 	def set_name
 		count = (table_config.tables.last.name.split(" ").last.to_i rescue 0)
-		self.name = "#{table_config.name} #{count+1}"
+		self.name = "#{table_config.try(:name)} #{count+1}"
 	end
 
 end
