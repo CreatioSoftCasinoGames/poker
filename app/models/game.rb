@@ -25,9 +25,16 @@ class Game < ActiveRecord::Base
 				hand_message: node_obj['handMessage'],
 				remaining_chips: node_obj['remainingChips']
 			})
+			best_hand_rank = (node_obj['handRank'].to_f > user.best_hand_rank.to_f) ? node_obj['handRank'] : user.best_hand_rank
+			best_hand = (node_obj['handRank'].to_f > user.best_hand_rank.to_f) ? node_obj['handMessage'] : user.best_hand
 			users_attributes.push({
 				id: user.id,
-				chips: user.chips - game_user.round_chips + node_obj['remainingChips']
+				chips: user.chips - game_user.round_chips + node_obj['remainingChips'],
+				biggest_pot: [user.biggest_pot, node_obj['winnerPrize']].max,
+				hands_played: (user.hands_played + 1),
+				hands_won: (node_obj['isWinner'] ? (user.hands_won + 1) : user.hands_won),
+				best_hand_rank: best_hand_rank,
+				best_hand: best_hand
 			})
 		end
 		params[:game_users_attributes] = game_users_attributes

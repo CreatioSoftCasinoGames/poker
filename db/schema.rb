@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141202064059) do
+ActiveRecord::Schema.define(version: 20141207195810) do
 
   create_table "api_keys", force: true do |t|
     t.string   "token"
@@ -134,6 +134,15 @@ ActiveRecord::Schema.define(version: 20141202064059) do
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
     t.integer  "device_avatar_id"
+    t.decimal  "biggest_pot",            precision: 10, scale: 0, default: 0
+    t.string   "best_hand"
+    t.decimal  "best_hand_rank",         precision: 10, scale: 0, default: 0
+    t.decimal  "hands_played",           precision: 10, scale: 0, default: 0
+    t.decimal  "hands_won",              precision: 10, scale: 0, default: 0
+    t.decimal  "folds_percent",          precision: 10, scale: 0, default: 0
+    t.decimal  "raise_percent",          precision: 10, scale: 0, default: 0
+    t.decimal  "check_percent",          precision: 10, scale: 0, default: 0
+    t.decimal  "bet_percent",            precision: 10, scale: 0, default: 0
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

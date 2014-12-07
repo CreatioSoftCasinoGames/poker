@@ -6,5 +6,13 @@ class UserSerializer < ActiveModel::Serializer
   						:full_name, 
   						:avatar, 
   						:chips,
-  						:player_since
+  						:player_since,
+  						:biggest_pot,
+  						:best_hand,
+  						:hands_played,
+  						:hands_won,
+  						:folds_percent,
+  						:raise_percent,
+  						:check_percent,
+  						:bet_percent
 end
