@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141207195810) do
+ActiveRecord::Schema.define(version: 20141212110240) do
 
   create_table "api_keys", force: true do |t|
     t.string   "token"
@@ -139,10 +139,13 @@ ActiveRecord::Schema.define(version: 20141207195810) do
     t.decimal  "best_hand_rank",         precision: 10, scale: 0, default: 0
     t.decimal  "hands_played",           precision: 10, scale: 0, default: 0
     t.decimal  "hands_won",              precision: 10, scale: 0, default: 0
-    t.decimal  "folds_percent",          precision: 10, scale: 0, default: 0
-    t.decimal  "raise_percent",          precision: 10, scale: 0, default: 0
-    t.decimal  "check_percent",          precision: 10, scale: 0, default: 0
-    t.decimal  "bet_percent",            precision: 10, scale: 0, default: 0
+    t.decimal  "folds",                  precision: 10, scale: 0, default: 0
+    t.decimal  "raises",                 precision: 10, scale: 0, default: 0
+    t.decimal  "checks",                 precision: 10, scale: 0, default: 0
+    t.decimal  "bets",                   precision: 10, scale: 0, default: 0
+    t.decimal  "total_turns",            precision: 10, scale: 0, default: 0
+    t.decimal  "all_ins",                precision: 10, scale: 0, default: 0
+    t.decimal  "calls",                  precision: 10, scale: 0, default: 0
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

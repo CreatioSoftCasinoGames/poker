@@ -3,8 +3,7 @@ class UserSerializer < ActiveModel::Serializer
   						:preferred_table_config_id, 
   						:email, 
   						:device_avatar_id, 
-  						:full_name, 
-  						:avatar, 
+  						:full_name,
   						:chips,
   						:player_since,
   						:biggest_pot,
@@ -12,7 +11,9 @@ class UserSerializer < ActiveModel::Serializer
   						:hands_played,
   						:hands_won,
   						:folds_percent,
-  						:raise_percent,
-  						:check_percent,
-  						:bet_percent
+  						:raises_percent,
+  						:checks_percent,
+  						:bets_percent,
+              :all_ins_percent
+
 end

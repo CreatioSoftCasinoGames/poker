@@ -22,6 +22,26 @@ class User < ActiveRecord::Base
     self.image? ? image.url(:avatar) : nil
   end
 
+  def folds_percent
+    (folds * 100)/total_turns rescue 0
+  end
+
+  def raises_percent
+    (raises * 100)/total_turns rescue 0
+  end
+
+  def checks_percent
+    (checks * 100)/total_turns rescue 0
+  end
+
+  def bets_percent
+    (bets * 100)/total_turns rescue 0
+  end
+
+  def all_ins_percent
+    (all_ins * 100)/total_turns rescue 0
+  end
+
   def player_since
     created_at.strftime("%B,%Y")
   end
