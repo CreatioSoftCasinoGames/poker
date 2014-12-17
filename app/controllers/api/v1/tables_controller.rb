@@ -14,5 +14,5 @@ class Api::V1::TablesController < Api::V1::ApplicationController
 			}
 		end
 	end
-
+	
 end

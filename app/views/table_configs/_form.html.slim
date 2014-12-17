@@ -35,6 +35,11 @@
       = f.text_field :max_buy_in, :class => 'form-control'
     = f.error_span(:max_buy_in)
   .form-group
+    = f.label :game_type, :class => 'control-label col-lg-2'
+    .col-lg-10
+      = f.select :game_type, options_for_select(["taxes_holdem", "sit_and_go", "shootout"]), {}, :class => 'form-control'
+    = f.error_span(:max_buy_in)
+  .form-group
     .col-lg-offset-2.col-lg-10
       = f.submit nil, :class => 'btn btn-primary'
       '
