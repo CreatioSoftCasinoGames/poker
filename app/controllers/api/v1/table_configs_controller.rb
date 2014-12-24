@@ -1,7 +1,7 @@
 class Api::V1::TableConfigsController < Api::V1::ApplicationController
 
 	def index
-		@table_configs = TableConfig.all
+		@table_configs = TableConfig.where(game_type: params[:game_type])
 		render json: @table_configs
 	end
 
