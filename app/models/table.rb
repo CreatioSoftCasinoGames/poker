@@ -5,6 +5,10 @@ class Table < ActiveRecord::Base
 	has_many :users, through: :table_users
 	before_save :set_name
 
+	def game_type
+		table_config.game_type
+	end
+
 	private
 
 	def set_name
