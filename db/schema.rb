@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141224071251) do
+ActiveRecord::Schema.define(version: 20150106084953) do
 
   create_table "api_keys", force: true do |t|
     t.string   "token"
@@ -84,17 +84,18 @@ ActiveRecord::Schema.define(version: 20141224071251) do
 
   create_table "table_configs", force: true do |t|
     t.string   "name"
-    t.decimal  "small_blind", precision: 10, scale: 0
-    t.decimal  "big_blind",   precision: 10, scale: 0
+    t.decimal  "small_blind",    precision: 10, scale: 0
+    t.decimal  "big_blind",      precision: 10, scale: 0
     t.integer  "min_player"
     t.integer  "max_player"
-    t.decimal  "min_buy_in",  precision: 10, scale: 0
-    t.decimal  "max_buy_in",  precision: 10, scale: 0
+    t.decimal  "min_buy_in",     precision: 10, scale: 0
+    t.decimal  "max_buy_in",     precision: 10, scale: 0
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "game_type"
-    t.decimal  "pot",         precision: 10, scale: 0
-    t.decimal  "fee",         precision: 10, scale: 0
+    t.decimal  "pot",            precision: 10, scale: 0
+    t.decimal  "fee",            precision: 10, scale: 0
+    t.integer  "shootout_level"
   end
 
   create_table "table_users", force: true do |t|
@@ -149,6 +150,7 @@ ActiveRecord::Schema.define(version: 20141224071251) do
     t.decimal  "total_turns",            precision: 10, scale: 0, default: 0
     t.decimal  "all_ins",                precision: 10, scale: 0, default: 0
     t.decimal  "calls",                  precision: 10, scale: 0, default: 0
+    t.integer  "shootout_level",                                  default: 1
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
