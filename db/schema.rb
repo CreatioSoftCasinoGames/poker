@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150106084953) do
+ActiveRecord::Schema.define(version: 20150106092234) do
 
   create_table "api_keys", force: true do |t|
     t.string   "token"
@@ -95,7 +95,7 @@ ActiveRecord::Schema.define(version: 20150106084953) do
     t.string   "game_type"
     t.decimal  "pot",            precision: 10, scale: 0
     t.decimal  "fee",            precision: 10, scale: 0
-    t.integer  "shootout_level"
+    t.integer  "shootout_level",                          default: 0
   end
 
   create_table "table_users", force: true do |t|
