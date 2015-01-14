@@ -5,7 +5,7 @@ class UserSerializer < ActiveModel::Serializer
   						:email, 
   						:device_avatar_id, 
   						:full_name,
-              :fb_id
+              :fb_id,
   						:chips,
   						:player_since,
   						:biggest_pot,
