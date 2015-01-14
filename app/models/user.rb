@@ -17,6 +17,7 @@ class User < ActiveRecord::Base
   validates_attachment :image, content_type: { content_type: /\Aimage\/.*\Z/ }
 
   before_create :set_joining_bonus
+  before_validation :set_fb_login_details, :set_guest_login_details
 
   def avatar
     self.image? ? image.url(:avatar) : nil
@@ -66,6 +67,23 @@ class User < ActiveRecord::Base
 
   def set_joining_bonus
     self.chips = 10000
+  end
+
+  def set_fb_login_details
+    if fb_id
+      password_generated = SecureRandom.hex(4)
+      self.password = password_generated
+      self.password_confirmation = password_generated
+    end
+  end
+
+  def set_guest_login_details
+    if is_guest
+      password_generated = SecureRandom.hex(4)
+      self.email = "guest_"+SecureRandom.hex(3)+"@pokerapi.com"
+      self.password = password_generated
+      self.password_confirmation = password_generated
+    end
   end
 
 end

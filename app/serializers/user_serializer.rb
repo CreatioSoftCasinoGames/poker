@@ -1,9 +1,11 @@
 class UserSerializer < ActiveModel::Serializer
   attributes  :id, 
+              :login_token,
   						:preferred_table_config_id, 
   						:email, 
   						:device_avatar_id, 
   						:full_name,
+              :fb_id
   						:chips,
   						:player_since,
   						:biggest_pot,

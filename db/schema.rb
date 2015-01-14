@@ -11,11 +11,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141224071251) do
+ActiveRecord::Schema.define(version: 20150114070918) do
 
   create_table "api_keys", force: true do |t|
     t.string   "token"
     t.boolean  "active",     default: true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "case_studies", force: true do |t|
+    t.string   "title"
+    t.text     "body"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "contacts", force: true do |t|
+    t.string   "name"
+    t.string   "email"
+    t.text     "subject"
+    t.text     "message"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -149,9 +165,12 @@ ActiveRecord::Schema.define(version: 20141224071251) do
     t.decimal  "total_turns",            precision: 10, scale: 0, default: 0
     t.decimal  "all_ins",                precision: 10, scale: 0, default: 0
     t.decimal  "calls",                  precision: 10, scale: 0, default: 0
+    t.string   "login_token"
+    t.string   "device_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["login_token"], name: "index_users_on_login_token", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
 end
