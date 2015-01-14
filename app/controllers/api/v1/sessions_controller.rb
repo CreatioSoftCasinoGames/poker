@@ -42,6 +42,9 @@ class Api::V1::SessionsController < Api::V1::ApplicationController
 		if @user.present?
 			@user.update_attributes(login_token: "")
 			session[:user_id] = nil
+			REDIS_CLIENT.del("game_player:#{params[:login_token]}")
+			REDIS_CLIENT.smembers("game_players")
+			REDIS_CLIENT.srem("game_player", "#{params[:login_token]}")
 			render json: {
 				success: true,
 				message: "You have been signed out successfully!"
