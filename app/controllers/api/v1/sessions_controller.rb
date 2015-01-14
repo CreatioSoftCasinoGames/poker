@@ -39,12 +39,12 @@ class Api::V1::SessionsController < Api::V1::ApplicationController
 
 	def destroy
 		@user = User.where(login_token: params[:id]).first
+
+			
 		if @user.present?
 			@user.update_attributes(login_token: "")
 			session[:user_id] = nil
-			REDIS_CLIENT.del("game_player:#{params[:login_token]}")
-			REDIS_CLIENT.smembers("game_players")
-			REDIS_CLIENT.srem("game_player", "#{params[:login_token]}")
+			REDIS_CLIENT.srem("game_players", "game_player:#{params[:id]}")
 			render json: {
 				success: true,
 				message: "You have been signed out successfully!"
