@@ -39,8 +39,7 @@ class Api::V1::SessionsController < Api::V1::ApplicationController
 
 	def destroy
 		@user = User.where(login_token: params[:id]).first
-
-			
+	
 		if @user.present?
 			@user.update_attributes(login_token: "")
 			session[:user_id] = nil

@@ -18,4 +18,7 @@ class UserSerializer < ActiveModel::Serializer
   						:bets_percent,
               :all_ins_percent
 
+      has_many :friend_requests
+      has_many :friends
+
 end

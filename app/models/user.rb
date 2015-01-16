@@ -10,6 +10,9 @@ class User < ActiveRecord::Base
   has_many :tables, through: :table_users
   has_many :game_users
   has_many :games, through: :game_users
+  has_many :friend_requests, :dependent => :destroy
+  has_many :friends, :dependent => :destroy
+  accepts_nested_attributes_for :friend_requests
 
   has_attached_file :image,
     Poker::Configuration.paperclip_options[:users][:image]
