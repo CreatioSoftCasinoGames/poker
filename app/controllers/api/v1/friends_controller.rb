@@ -21,7 +21,7 @@ class Api::V1::FriendsController < Api::V1::ApplicationController
 	end
 
 	def show
-		@friend = Friend.find(params[:id])
+		@friend = Friend.where(user_id: params[:id] or requested_to: params[:id]).all
 		render json: @friend
 	end
 

@@ -21,6 +21,12 @@ Rails.application.routes.draw do
       resources :tables do
         get :assign, on: :collection
       end
+      resources :users do
+        member do
+          put :freind_request
+          put :update_status
+        end
+      end
       resources :sessions, only: [:create, :destroy]
       resources :table_config_users, only: [:create]
       get "table_configs/:game_type/tables" => "table_configs#get_game_type"
