@@ -5,7 +5,9 @@ class Api::V1::FriendsController < Api::V1::ApplicationController
 		if @friend.save
 			render json: @friend
 		else
-			errors: @friend.errors.full_messages.join
+			render json: {
+				errors: @friend.errors.full_messages.join
+			}
 		end
 	end
 
@@ -21,7 +23,7 @@ class Api::V1::FriendsController < Api::V1::ApplicationController
 	end
 
 	def show
-		@friend = Friend.where(user_id: params[:id] or requested_to: params[:id]).all
+		@friend = Friend.where(user_id: params[:id]).all
 		render json: @friend
 	end
 

@@ -22,7 +22,7 @@ class Api::V1::FriendRequestController < Api::V1::ApplicationController
 	end
 
 	def show
-		@friend_request = FriendRequest.find(params[:id] or params[:requested_to])
+		@friend_request = FriendRequest.find(params[:id])
 		render json: @friend_request
 	end
 
