@@ -1,6 +1,6 @@
 class Api::V1::UsersController < Api::V1::ApplicationController
 
-	before_action :find_user, only: [:show, :update]
+	before_action :find_user, only: [:show, :update, :my_friends]
 
 	def create
 		params[:password] = "temp1234" if params[:password].blank?
@@ -20,7 +20,6 @@ class Api::V1::UsersController < Api::V1::ApplicationController
 	end
 
 	def update
-		@user = User.where(id: params[:id]).first
 		if @user.update_attributes(user_params)
 			render json: {
 				user: UserSerializer.new(@user),
@@ -36,18 +35,17 @@ class Api::V1::UsersController < Api::V1::ApplicationController
 	end
 
 	def my_friend_requests
-		@friend_requests = FriendRequest.where(requested_to_id: params[:id])
+		@friend_requests = FriendRequest.where(requested_to_id: params[:id], status: false)
 		render json: @friend_requests
 		
 	end
 
 	def my_friends
-		@friends = Friendship.where(friend_id: params[:id])
+		@friends = @user.friends
 		render json: @friends
 	end
 
 	def show
-		@user = User.where(id: params[:id]).first
 		render json: @user
 	end
 
@@ -58,7 +56,7 @@ class Api::V1::UsersController < Api::V1::ApplicationController
 	end
 
 	def find_user
-		@user = User.where(id: params[:id])
+		@user = User.where(login_token: params[:id]).first
 	end
 
 end

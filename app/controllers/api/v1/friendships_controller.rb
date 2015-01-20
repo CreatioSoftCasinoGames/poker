@@ -1,4 +1,6 @@
 class Api::V1::FriendshipsController < Api::V1::ApplicationController
+
+	#skip_before_filter :authenticate_user
 	
 	def create
 		@friend = Friendship.save(friend_params)
