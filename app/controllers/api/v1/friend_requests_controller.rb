@@ -1,17 +1,27 @@
-class Api::V1::FriendRequestController < Api::V1::ApplicationController
+class Api::V1::FriendRequestsController < Api::V1::ApplicationController
+
+	before_action :get_friend_requests, only: [:show, :destroy, :update]
 	def create
-		@friend_request = FriendRequest.new(friend_request_params)
-		if @friend_request.save
-			render json: @friend_request
+		@user = User.where(id: params[:id]).first
+		@requested_friend = User.where(id: params[:requested_to]).first
+		if @requested_friend.present?
+			@friend_request = FriendRequest.new(user_id: params[:id], requested_to_id: params[:requested_to])
+			if @friend_request.save
+				render json: @user
+			else
+				render json: {
+					errors: @friend.errors.full_messages.join(", ")
+				}
+			end
 		else
 			render json: {
-				errors: @friend_request.errors.full_messages.join(", ")
+				message: "Requested Friend not found"
 			}
 		end
+
 	end
 
 	def update
-		@friend_request = FriendRequest.find(params[:id])
 		if @friend_request.update_attributes(friend_request_params)
 			render json: @friend_request
 		else
@@ -21,15 +31,22 @@ class Api::V1::FriendRequestController < Api::V1::ApplicationController
 		end
 	end
 
+	def destroy
+		@friend_request.destroy
+	end
+
 	def show
-		@friend_request = FriendRequest.find(params[:id])
 		render json: @friend_request
 	end
 
 	private
 
 	def friend_request_params
-		params.require(:friend_request).permit(:requested_to, :status)
+		params.require(:friend_request).permit(:status)
+	end
+
+	def get_friend_requests
+		@friend_request = FriendRequest.where(id: params[:id]).first
 	end
 
 end

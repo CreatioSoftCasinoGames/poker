@@ -19,6 +19,6 @@ class UserSerializer < ActiveModel::Serializer
               :all_ins_percent
 
       has_many :friend_requests
-      has_many :friends
+      has_many :friendships
 
 end

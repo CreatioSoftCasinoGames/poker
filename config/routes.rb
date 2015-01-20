@@ -18,13 +18,14 @@ Rails.application.routes.draw do
       resources :table_configs
       resources :users
       resources :games
+      resources :friend_requests
       resources :tables do
         get :assign, on: :collection
       end
       resources :users do
         member do
-          put :freind_request
-          put :update_status
+          get :my_friend_requests
+          get :my_friends
         end
       end
       resources :sessions, only: [:create, :destroy]

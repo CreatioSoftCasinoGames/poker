@@ -1,3 +1,3 @@
 class FriendRequestSerializer < ActiveModel::Serializer
-	attributes :user_id, :requested_to, :status
+	attributes :id, :user_id, :requested_to_id, :status
 end

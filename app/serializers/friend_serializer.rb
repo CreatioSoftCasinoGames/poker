@@ -1,3 +1,3 @@
-class FriendSerializer < ActiveModel::Serializer
+class FriendshipsSerializer < ActiveModel::Serializer
 	attributes :user_id, :friend_id
 end
