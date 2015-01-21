@@ -1,0 +1,33 @@
+- model_class = EconomyParticipation
+div class="page-header"
+  h1=t '.title', :default => model_class.model_name.human.pluralize.titleize
+table class="table table-striped"
+  thead
+    tr
+      th= model_class.human_attribute_name(:id)
+      th= model_class.human_attribute_name(:lower_limit)
+      th= model_class.human_attribute_name(:upper_limit)
+      th= model_class.human_attribute_name(:winner_points)
+      th= model_class.human_attribute_name(:other_winner_points)
+      th= model_class.human_attribute_name(:participation_point)
+      th= model_class.human_attribute_name(:stopper)
+      th= model_class.human_attribute_name(:created_at)
+      th=t '.actions', :default => t("helpers.actions")
+  tbody
+    - @economy_participations.each do |economy_participation|
+      tr
+        td= link_to economy_participation.id, economy_participation_path(economy_participation)
+        td= economy_participation.lower_limit
+        td= economy_participation.upper_limit
+        td= economy_participation.winner_points
+        td= economy_participation.other_winner_points
+        td= economy_participation.participation_point
+        td= economy_participation.stopper
+        td=l economy_participation.created_at
+        td
+          = link_to t('.edit', :default => t("helpers.links.edit")), edit_economy_participation_path(economy_participation), :class => 'btn btn-default btn-xs'
+          '
+          = link_to t('.destroy', :default => t("helpers.links.destroy")), economy_participation_path(economy_participation), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-xs btn-danger'
+
+= link_to t('.new', :default => t("helpers.links.new")), new_economy_participation_path, :class => 'btn btn-primary'
+

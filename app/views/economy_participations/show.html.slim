@@ -1,0 +1,34 @@
+- model_class = EconomyParticipation
+div class="page-header"
+  h1=t '.title', :default => model_class.model_name.human.titleize
+
+p
+  strong= model_class.human_attribute_name(:lower_limit) + ':'
+  br
+  = @economy_participation.lower_limit
+p
+  strong= model_class.human_attribute_name(:upper_limit) + ':'
+  br
+  = @economy_participation.upper_limit
+p
+  strong= model_class.human_attribute_name(:winner_points) + ':'
+  br
+  = @economy_participation.winner_points
+p
+  strong= model_class.human_attribute_name(:other_winner_points) + ':'
+  br
+  = @economy_participation.other_winner_points
+p
+  strong= model_class.human_attribute_name(:participation_point) + ':'
+  br
+  = @economy_participation.participation_point
+p
+  strong= model_class.human_attribute_name(:stopper) + ':'
+  br
+  = @economy_participation.stopper
+
+= link_to t('.back', :default => t("helpers.links.back")), economy_participations_path, :class => 'btn btn-default'
+'
+= link_to t('.edit', :default => t("helpers.links.edit")), edit_economy_participation_path(@economy_participation), :class => 'btn btn-default'
+'
+= link_to t('.destroy', :default => t("helpers.links.destroy")), economy_participation_path(@economy_participation), :method => "delete", :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-danger'

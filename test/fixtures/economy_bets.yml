@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  lower_limit: 9.99
+  upper_limit: 9.99
+  points: 1
+
+two:
+  lower_limit: 9.99
+  upper_limit: 9.99
+  points: 1
