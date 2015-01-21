@@ -1,6 +1,6 @@
 class Api::V1::UsersController < Api::V1::ApplicationController
 
-	before_action :find_user, only: [:show, :update, :my_friends]
+	before_action :find_user, only: [:show, :update, :my_friends, :my_friend_requests]
 
 	def create
 		params[:password] = "temp1234" if params[:password].blank?
@@ -35,7 +35,7 @@ class Api::V1::UsersController < Api::V1::ApplicationController
 	end
 
 	def my_friend_requests
-		@friend_requests = FriendRequest.where(requested_to_id: params[:id], status: false)
+		@friend_requests = @user.friend_requests.where(status: false)
 		render json: @friend_requests
 		
 	end
