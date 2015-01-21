@@ -37,6 +37,9 @@ class Api::V1::FriendRequestsController < Api::V1::ApplicationController
 
 	def destroy
 		@friend_request.destroy
+		render json:{
+			message: "Request deleted!"
+		}
 	end
 
 	def show
