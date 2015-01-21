@@ -35,7 +35,7 @@ class Api::V1::UsersController < Api::V1::ApplicationController
 	end
 
 	def my_friend_requests
-		@friend_requests = @user.friend_requests.where(status: false)
+		@friend_requests = @user.friend_requests.where(confirm: false)
 		render json: @friend_requests
 		
 	end

@@ -49,7 +49,7 @@ class Api::V1::FriendRequestsController < Api::V1::ApplicationController
 	private
 
 	def friend_request_params
-		params.require(:friend_request).permit(:status)
+		params.require(:friend_request).permit(:confirm)
 	end
 
 	def get_friend_requests
