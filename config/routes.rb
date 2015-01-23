@@ -18,10 +18,17 @@ Rails.application.routes.draw do
       resources :table_configs
       resources :users
       resources :games
+      resources :friend_requests
       resources :tables do
         get :assign, on: :collection
       end
-      resources :sessions, only: [:create]
+      resources :users do
+        member do
+          get :my_friend_requests
+          get :my_friends
+        end
+      end
+      resources :sessions, only: [:create, :destroy]
       resources :table_config_users, only: [:create]
       get "table_configs/:game_type/tables" => "table_configs#get_game_type"
     end
