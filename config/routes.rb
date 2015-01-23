@@ -1,6 +1,12 @@
 require 'sidekiq/web'
 Rails.application.routes.draw do
 
+  resources :economy_bets
+
+  resources :economy_hands
+
+  resources :economy_participations
+
   mount Sidekiq::Web => '/sidekiq'
   resources :tables
 

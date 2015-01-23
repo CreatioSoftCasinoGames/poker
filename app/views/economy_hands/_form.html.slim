@@ -1,0 +1,21 @@
+= form_for @economy_hand, html: { class: "form form-horizontal economy_hand" } do |f|
+  .form-group
+    = f.label :hand_quality, :class => 'control-label col-lg-2'
+    .col-lg-10
+      = f.text_field :hand_quality, :class => 'form-control'
+    = f.error_span(:hand_quality)
+  .form-group
+    = f.label :winner_point, :class => 'control-label col-lg-2'
+    .col-lg-10
+      = f.text_field :winner_point, :class => 'form-control'
+    = f.error_span(:winner_point)
+  .form-group
+    = f.label :other_winner_point, :class => 'control-label col-lg-2'
+    .col-lg-10
+      = f.text_field :other_winner_point, :class => 'form-control'
+    = f.error_span(:other_winner_point)
+  .form-group
+    .col-lg-offset-2.col-lg-10
+      = f.submit nil, :class => 'btn btn-primary'
+      '
+      = link_to t('.cancel', :default => t("helpers.links.cancel")), economy_hands_path, :class => 'btn'

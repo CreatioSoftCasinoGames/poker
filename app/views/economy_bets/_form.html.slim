@@ -1,0 +1,21 @@
+= form_for @economy_bet, html: { class: "form form-horizontal economy_bet" } do |f|
+  .form-group
+    = f.label :lower_limit, :class => 'control-label col-lg-2'
+    .col-lg-10
+      = f.text_field :lower_limit, :class => 'form-control'
+    = f.error_span(:lower_limit)
+  .form-group
+    = f.label :upper_limit, :class => 'control-label col-lg-2'
+    .col-lg-10
+      = f.text_field :upper_limit, :class => 'form-control'
+    = f.error_span(:upper_limit)
+  .form-group
+    = f.label :points, :class => 'control-label col-lg-2'
+    .col-lg-10
+      = f.text_field :points, :class => 'form-control'
+    = f.error_span(:points)
+  .form-group
+    .col-lg-offset-2.col-lg-10
+      = f.submit nil, :class => 'btn btn-primary'
+      '
+      = link_to t('.cancel', :default => t("helpers.links.cancel")), economy_bets_path, :class => 'btn'
