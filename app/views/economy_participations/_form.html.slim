@@ -1,0 +1,36 @@
+= form_for @economy_participation, html: { class: "form form-horizontal economy_participation" } do |f|
+  .form-group
+    = f.label :lower_limit, :class => 'control-label col-lg-2'
+    .col-lg-10
+      = f.text_field :lower_limit, :class => 'form-control'
+    = f.error_span(:lower_limit)
+  .form-group
+    = f.label :upper_limit, :class => 'control-label col-lg-2'
+    .col-lg-10
+      = f.text_field :upper_limit, :class => 'form-control'
+    = f.error_span(:upper_limit)
+  .form-group
+    = f.label :winner_points, :class => 'control-label col-lg-2'
+    .col-lg-10
+      = f.text_field :winner_points, :class => 'form-control'
+    = f.error_span(:winner_points)
+  .form-group
+    = f.label :other_winner_points, :class => 'control-label col-lg-2'
+    .col-lg-10
+      = f.text_field :other_winner_points, :class => 'form-control'
+    = f.error_span(:other_winner_points)
+  .form-group
+    = f.label :participation_point, :class => 'control-label col-lg-2'
+    .col-lg-10
+      = f.text_field :participation_point, :class => 'form-control'
+    = f.error_span(:participation_point)
+  .form-group
+    = f.label :stopper, :class => 'control-label col-lg-2'
+    .col-lg-10
+      = f.text_field :stopper, :class => 'form-control'
+    = f.error_span(:stopper)
+  .form-group
+    .col-lg-offset-2.col-lg-10
+      = f.submit nil, :class => 'btn btn-primary'
+      '
+      = link_to t('.cancel', :default => t("helpers.links.cancel")), economy_participations_path, :class => 'btn'

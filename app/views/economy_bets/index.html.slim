@@ -1,0 +1,27 @@
+- model_class = EconomyBet
+div class="page-header"
+  h1=t '.title', :default => model_class.model_name.human.pluralize.titleize
+table class="table table-striped"
+  thead
+    tr
+      th= model_class.human_attribute_name(:id)
+      th= model_class.human_attribute_name(:lower_limit)
+      th= model_class.human_attribute_name(:upper_limit)
+      th= model_class.human_attribute_name(:points)
+      th= model_class.human_attribute_name(:created_at)
+      th=t '.actions', :default => t("helpers.actions")
+  tbody
+    - @economy_bets.each do |economy_bet|
+      tr
+        td= link_to economy_bet.id, economy_bet_path(economy_bet)
+        td= economy_bet.lower_limit
+        td= economy_bet.upper_limit
+        td= economy_bet.points
+        td=l economy_bet.created_at
+        td
+          = link_to t('.edit', :default => t("helpers.links.edit")), edit_economy_bet_path(economy_bet), :class => 'btn btn-default btn-xs'
+          '
+          = link_to t('.destroy', :default => t("helpers.links.destroy")), economy_bet_path(economy_bet), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-xs btn-danger'
+
+= link_to t('.new', :default => t("helpers.links.new")), new_economy_bet_path, :class => 'btn btn-primary'
+
