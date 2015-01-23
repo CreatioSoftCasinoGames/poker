@@ -60,10 +60,6 @@ class EconomyParticipationsController < ApplicationController
     end
   end
 
-  def shink_database
-    REDIS_CLIENT.sadd["economy_participations"] = "lower_limit", "upper_limit", "winner_points", "other_winner_points", "participation_point", "stopper"
-  end
-
   # DELETE /economy_participations/1
   # DELETE /economy_participations/1.json
   def destroy

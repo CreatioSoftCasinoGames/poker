@@ -188,9 +188,9 @@ ActiveRecord::Schema.define(version: 20150121090959) do
     t.decimal  "total_turns",            precision: 10, scale: 0, default: 0
     t.decimal  "all_ins",                precision: 10, scale: 0, default: 0
     t.decimal  "calls",                  precision: 10, scale: 0, default: 0
-    t.integer  "shootout_level",                                  default: 1
     t.string   "login_token"
     t.string   "device_id"
+    t.integer  "shootout_level",                                  default: 1
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
