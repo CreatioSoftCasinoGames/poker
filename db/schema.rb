@@ -122,17 +122,18 @@ ActiveRecord::Schema.define(version: 20150121090959) do
 
   create_table "table_configs", force: true do |t|
     t.string   "name"
-    t.decimal  "small_blind", precision: 10, scale: 0
-    t.decimal  "big_blind",   precision: 10, scale: 0
+    t.decimal  "small_blind",    precision: 10, scale: 0
+    t.decimal  "big_blind",      precision: 10, scale: 0
     t.integer  "min_player"
     t.integer  "max_player"
-    t.decimal  "min_buy_in",  precision: 10, scale: 0
-    t.decimal  "max_buy_in",  precision: 10, scale: 0
+    t.decimal  "min_buy_in",     precision: 10, scale: 0
+    t.decimal  "max_buy_in",     precision: 10, scale: 0
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "game_type"
-    t.decimal  "pot",         precision: 10, scale: 0
-    t.decimal  "fee",         precision: 10, scale: 0
+    t.decimal  "pot",            precision: 10, scale: 0
+    t.decimal  "fee",            precision: 10, scale: 0
+    t.integer  "shootout_level",                          default: 0
   end
 
   create_table "table_users", force: true do |t|
@@ -187,6 +188,7 @@ ActiveRecord::Schema.define(version: 20150121090959) do
     t.decimal  "total_turns",            precision: 10, scale: 0, default: 0
     t.decimal  "all_ins",                precision: 10, scale: 0, default: 0
     t.decimal  "calls",                  precision: 10, scale: 0, default: 0
+    t.integer  "shootout_level",                                  default: 1
     t.string   "login_token"
     t.string   "device_id"
   end
