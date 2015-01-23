@@ -78,6 +78,6 @@ class TableConfigsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def table_config_params
-      params.require(:table_config).permit(:name, :small_blind, :big_blind, :min_player, :max_player, :min_buy_in, :max_buy_in, :game_type, :fee, :pot)
+      params.require(:table_config).permit(:name, :small_blind, :big_blind, :min_player, :max_player, :min_buy_in, :max_buy_in, :game_type, :fee, :pot, :shootout_level)
     end
 end
