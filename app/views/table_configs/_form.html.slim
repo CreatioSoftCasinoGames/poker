@@ -40,6 +40,11 @@
       = f.text_field :pot, :class => 'form-control'
     = f.error_span(:pot)
   .form-group
+    = f.label :shootout_level, :class => 'control-label col-lg-2'
+    .col-lg-10
+      = f.number_field :shootout_level, :class => 'form-control'
+    = f.error_span(:shootout_level)
+  .form-group
     = f.label :fee, :class => 'control-label col-lg-2'
     .col-lg-10
       = f.text_field :fee, :class => 'form-control'
