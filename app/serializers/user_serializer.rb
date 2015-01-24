@@ -17,5 +17,6 @@ class UserSerializer < ActiveModel::Serializer
   						:checks_percent,
   						:bets_percent,
               :all_ins_percent,
-              :shootout_level
+              :shootout_level,
+              :diamonds
 end
