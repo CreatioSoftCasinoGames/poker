@@ -20,6 +20,33 @@ ActiveRecord::Schema.define(version: 20150123143104) do
     t.datetime "updated_at"
   end
 
+  create_table "economy_bets", force: true do |t|
+    t.decimal  "lower_limit", precision: 10, scale: 0
+    t.decimal  "upper_limit", precision: 10, scale: 0
+    t.integer  "points"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "economy_hands", force: true do |t|
+    t.string   "hand_quality"
+    t.integer  "winner_point"
+    t.integer  "other_winner_point"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "economy_participations", force: true do |t|
+    t.decimal  "lower_limit",         precision: 10, scale: 0
+    t.decimal  "upper_limit",         precision: 10, scale: 0
+    t.integer  "winner_points"
+    t.integer  "other_winner_points"
+    t.integer  "participation_point"
+    t.integer  "stopper"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "friend_requests", force: true do |t|
     t.integer "user_id"
     t.integer "requested_to_id"

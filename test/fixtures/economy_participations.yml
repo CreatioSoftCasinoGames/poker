@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  lower_limit: 9.99
+  upper_limit: 9.99
+  winner_points: 1
+  other_winner_points: 1
+  participation_point: 1
+  stopper: 1
+
+two:
+  lower_limit: 9.99
+  upper_limit: 9.99
+  winner_points: 1
+  other_winner_points: 1
+  participation_point: 1
+  stopper: 1
