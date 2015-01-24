@@ -16,7 +16,7 @@ Rails.application.routes.draw do
 
   resources :utility do
     collection do
-      get :sink_data
+      get :sync_data
     end
   end
 

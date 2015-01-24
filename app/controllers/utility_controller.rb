@@ -9,7 +9,7 @@ class UtilityController < ApplicationController
 		redirect_to show_api_key_url, flash: {success: "New keys created successfully !"}
 	end
 
-	def sink_data
+	def sync_data
 		@table_configs = TableConfig.includes(:tables).all
 		@table_configs.each do |table_config|
 			REDIS_CLIENT.SADD("table_configs", "table_config:#{table_config.id}")
