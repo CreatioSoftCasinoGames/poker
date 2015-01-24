@@ -27,8 +27,8 @@ class UtilityController < ApplicationController
 		end
  
 		EconomyHand.all.each do |economy_hand|
-			REDIS_CLIENT.SADD("economy_hands", "economy_hand:hand_quality")
-			REDIS_CLIENT.HMSET("economy_hand:#{hand_quality}", "winner_point", economy_hand.winner_point, "other_winner_point", economy_hand.other_winner_point)
+			REDIS_CLIENT.SADD("economy_hands", "economy_hand:#{economy_hand.hand_quality}")
+			REDIS_CLIENT.HMSET("economy_hand:#{economy_hand.hand_quality}", "winner_point", economy_hand.winner_point, "other_winner_point", economy_hand.other_winner_point)
 		end
 
 		EconomyBet.all.each do |economy_bet|
