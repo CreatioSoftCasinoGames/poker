@@ -16,7 +16,7 @@ class UtilityController < ApplicationController
 			table_config.tables.each do |table|
 				REDIS_CLIENT.SADD("tables","table:#{table.id}")
 				REDIS_CLIENT.SADD("table_config_tables:#{table.table_config_id}", "table:#{table.id}")
-				REDIS_CLIENT.ZADD("table_config_occupancy:#{table.table_config_id}", 0, "tabel:#{table.id}")
+				REDIS_CLIENT.ZADD("table_config_occupancy:#{table.table_config_id}", 0, "table:#{table.id}")
 				REDIS_CLIENT.HMSET("table:#{table.id}", "name", table.name, "table_config_id", table.table_config_id)
 			end
 		end
