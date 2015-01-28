@@ -24,8 +24,12 @@ html lang="en"
         .navbar-collapse.collapse.navbar-responsive-collapse.pull-right
           ul.nav.navbar-nav
             - if user_signed_in?
-              li= link_to "Api Key", show_api_key_path
-              li= link_to "Table Config", table_configs_path
+              - if can? :update, @user
+                li= link_to "Bets XP", economy_bets_path
+                li= link_to "Hands XP", economy_hands_path
+                li= link_to "Participation XP", economy_participations_path
+                li= link_to "Api Key", show_api_key_path
+                li= link_to "Table Config", table_configs_path
               li= link_to "Logout", destroy_user_session_path, :method => :delete
             - else
               li= link_to("Sign In", new_user_session_path)
