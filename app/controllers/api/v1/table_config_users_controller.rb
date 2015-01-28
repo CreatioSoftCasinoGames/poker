@@ -1,7 +1,8 @@
 class Api::V1::TableConfigUsersController < Api::V1::ApplicationController
 
 	def create
-		@table_config_user = TableConfigUser.new(table_config_id: params[:table_config_id], user_id: params[:user_id], active: true)
+		@user = User.where(login_token: params[:user_id]).first
+		@table_config_user = TableConfigUser.new(table_config_id: params[:table_config_id], user_id: @user.id, active: true)
 		if @table_config_user.save
 			render json: {
 				user: @table_config_user.user,
