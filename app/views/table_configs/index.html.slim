@@ -27,6 +27,7 @@ table class="table table-striped"
         td= table_config.max_buy_in
         td=l table_config.created_at
         td
+        -if can? :update, table_config
           = link_to t('.edit', :default => t("helpers.links.edit")), edit_table_config_path(table_config), :class => 'btn btn-default btn-xs'
           '
           = link_to t('.destroy', :default => t("helpers.links.destroy")), table_config_path(table_config), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-xs btn-danger'
