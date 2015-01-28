@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150123143104) do
+ActiveRecord::Schema.define(version: 20150128165308) do
 
   create_table "api_keys", force: true do |t|
     t.string   "token"
@@ -169,7 +169,7 @@ ActiveRecord::Schema.define(version: 20150123143104) do
     t.string   "role",                                            default: "PLAYER"
     t.boolean  "is_guest"
     t.decimal  "chips",                  precision: 10, scale: 0
-    t.decimal  "xp",                     precision: 10, scale: 0
+    t.decimal  "xp",                     precision: 10, scale: 0, default: 0
     t.decimal  "diamonds",               precision: 10, scale: 0, default: 0
     t.string   "image_file_name"
     t.string   "image_content_type"

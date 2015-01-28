@@ -31,6 +31,7 @@ class Game < ActiveRecord::Base
 			users_attributes.push({
 				id: user.id,
 				chips: user.chips - game_user.round_chips + node_obj['remainingChips'],
+				xp: xp + node_obj['xp'],
 				biggest_pot: [user.biggest_pot, node_obj['winnerPrize']].max,
 				hands_played: (user.hands_played + 1),
 				hands_won: (node_obj['isWinner'] ? (user.hands_won + 1) : user.hands_won),
