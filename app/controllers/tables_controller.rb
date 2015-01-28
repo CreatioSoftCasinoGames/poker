@@ -1,4 +1,5 @@
 class TablesController < ApplicationController
+  load_and_authorize_resource
   before_action :set_table, only: [:show, :edit, :update, :destroy]
 
   # GET /tables

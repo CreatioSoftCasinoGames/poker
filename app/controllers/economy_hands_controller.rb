@@ -1,4 +1,5 @@
 class EconomyHandsController < ApplicationController
+  load_and_authorize_resource
   before_action :set_economy_hand, only: [:show, :edit, :update, :destroy]
 
   # GET /economy_hands

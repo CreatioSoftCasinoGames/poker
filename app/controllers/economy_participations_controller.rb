@@ -1,4 +1,5 @@
 class EconomyParticipationsController < ApplicationController
+  load_and_authorize_resource
   before_action :set_economy_participation, only: [:show, :edit, :update, :destroy]
 
   # GET /economy_participations
