@@ -1,0 +1,22 @@
+- model_class = EconomyRange
+div class="page-header"
+  h1=t '.title', :default => model_class.model_name.human.titleize
+
+p
+  strong= model_class.human_attribute_name(:upper_limit) + ':'
+  br
+  = @economy_range.upper_limit
+p
+  strong= model_class.human_attribute_name(:lower_limit) + ':'
+  br
+  = @economy_range.lower_limit
+p
+  strong= model_class.human_attribute_name(:level) + ':'
+  br
+  = @economy_range.level
+
+= link_to t('.back', :default => t("helpers.links.back")), economy_ranges_path, :class => 'btn btn-default'
+'
+= link_to t('.edit', :default => t("helpers.links.edit")), edit_economy_range_path(@economy_range), :class => 'btn btn-default'
+'
+= link_to t('.destroy', :default => t("helpers.links.destroy")), economy_range_path(@economy_range), :method => "delete", :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-danger'
