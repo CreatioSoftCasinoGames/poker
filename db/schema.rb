@@ -11,7 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
+ActiveRecord::Schema.define(version: 20150129091546) do
+=======
 ActiveRecord::Schema.define(version: 20150128165308) do
+>>>>>>> a89ac585865c1f32041c4c2c6814b360c5423782
 
   create_table "api_keys", force: true do |t|
     t.string   "token"
@@ -43,6 +47,14 @@ ActiveRecord::Schema.define(version: 20150128165308) do
     t.integer  "other_winner_points"
     t.integer  "participation_point"
     t.integer  "stopper"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "economy_ranges", force: true do |t|
+    t.decimal  "upper_limit", precision: 10, scale: 0
+    t.decimal  "lower_limit", precision: 10, scale: 0
+    t.integer  "level"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
