@@ -60,3 +60,4 @@ group :development do
   gem 'capistrano', '2.15.5'
   gem 'capistrano-unicorn', :require => false
 end
+gem 'cancancan', '~> 1.10'

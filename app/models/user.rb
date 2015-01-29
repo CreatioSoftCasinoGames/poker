@@ -13,7 +13,8 @@ class User < ActiveRecord::Base
   has_many :friend_requests, :dependent => :destroy
   has_many :friendships, :dependent => :destroy
   has_many :friends, through: :friendships
-
+  #Roles = [:adimin, :default]
+  #attr_accessor :name , :email
   has_attached_file :image,
     Poker::Configuration.paperclip_options[:users][:image]
 
@@ -64,6 +65,12 @@ class User < ActiveRecord::Base
 
   def get_table
     tables = Table.where(table_config_id: @user.preferred_table_config_id)
+  end
+
+  #Roles = [ :admin , :default ]
+
+  def is?( requested_role )
+    self.role == requested_role.to_s
   end
 
   private

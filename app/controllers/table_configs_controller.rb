@@ -1,4 +1,5 @@
 class TableConfigsController < ApplicationController
+  load_and_authorize_resource
   before_action :set_table_config, only: [:show, :edit, :update, :destroy]
 
   # GET /table_configs
@@ -28,6 +29,7 @@ class TableConfigsController < ApplicationController
 
   # GET /table_configs/1/edit
   def edit
+    authorize! :update, @table_config
   end
 
   # POST /table_configs
