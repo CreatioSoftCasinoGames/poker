@@ -1,4 +1,5 @@
 class EconomyRangesController < ApplicationController
+  load_and_authorize_resource
   before_action :set_economy_range, only: [:show, :edit, :update, :destroy]
 
   # GET /economy_ranges

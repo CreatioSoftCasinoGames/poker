@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150129091546) do
+ActiveRecord::Schema.define(version: 20150130113749) do
 
   create_table "api_keys", force: true do |t|
     t.string   "token"
@@ -196,9 +196,9 @@ ActiveRecord::Schema.define(version: 20150129091546) do
     t.decimal  "total_turns",            precision: 10, scale: 0, default: 0
     t.decimal  "all_ins",                precision: 10, scale: 0, default: 0
     t.decimal  "calls",                  precision: 10, scale: 0, default: 0
-    t.integer  "shootout_level",                                  default: 1
     t.string   "login_token"
     t.string   "device_id"
+    t.integer  "shootout_level",                                  default: 1
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
