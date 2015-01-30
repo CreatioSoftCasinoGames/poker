@@ -21,8 +21,12 @@ class Api::V1::UsersController < Api::V1::ApplicationController
 
 	def update
 		if @user.update_attributes(user_params)
+			# p user_params
+
 			render json: {
-				user: UserSerializer.new(@user),
+				user: @user.as_json({
+						only: user_params.keys
+					}),
 				valid: true
 			}
 		else
@@ -52,7 +56,7 @@ class Api::V1::UsersController < Api::V1::ApplicationController
 	private
 
 	def user_params
-		params.require(:user).permit(:first_name, :last_name, :password, :password_confirmation, :image, :fb_id, :email, :device_avatar_id, :shootout_level, :diamonds)
+		params.require(:user).permit(:first_name, :last_name, :password, :password_confirmation, :image, :fb_id, :email, :device_avatar_id, :shootout_level, :diamonds, :xp)
 	end
 
 	def find_user
