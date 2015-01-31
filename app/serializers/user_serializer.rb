@@ -19,5 +19,6 @@ class UserSerializer < ActiveModel::Serializer
               :all_ins_percent,
               :shootout_level,
               :diamonds,
-              :xp
+              :xp,
+              :level
 end
