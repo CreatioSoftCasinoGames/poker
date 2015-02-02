@@ -3,13 +3,13 @@ div class="page-header"
   h1=t '.title', :default => model_class.model_name.human.titleize
 
 p
-  strong= model_class.human_attribute_name(:upper_limit) + ':'
-  br
-  = @economy_range.upper_limit
-p
   strong= model_class.human_attribute_name(:lower_limit) + ':'
   br
   = @economy_range.lower_limit
+p
+  strong= model_class.human_attribute_name(:upper_limit) + ':'
+  br
+  = @economy_range.upper_limit
 p
   strong= model_class.human_attribute_name(:level) + ':'
   br

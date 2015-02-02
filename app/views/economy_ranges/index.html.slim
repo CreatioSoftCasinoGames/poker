@@ -5,8 +5,8 @@ table class="table table-striped"
   thead
     tr
       th= model_class.human_attribute_name(:id)
-      th= model_class.human_attribute_name(:upper_limit)
       th= model_class.human_attribute_name(:lower_limit)
+      th= model_class.human_attribute_name(:upper_limit)
       th= model_class.human_attribute_name(:level)
       th= model_class.human_attribute_name(:created_at)
       th=t '.actions', :default => t("helpers.actions")
@@ -14,8 +14,8 @@ table class="table table-striped"
     - @economy_ranges.each do |economy_range|
       tr
         td= link_to economy_range.id, economy_range_path(economy_range)
-        td= economy_range.upper_limit
         td= economy_range.lower_limit
+        td= economy_range.upper_limit
         td= economy_range.level
         td=l economy_range.created_at
         td
