@@ -33,6 +33,7 @@ class Game < ActiveRecord::Base
 				chips: user.chips - game_user.round_chips + node_obj['remainingChips'],
 				xp: node_obj['xp'],
 				level: node_obj['level'],
+				level_percentage: node_obj['levelPercent'],
 				biggest_pot: [user.biggest_pot, node_obj['winnerPrize']].max,
 				hands_played: (user.hands_played + 1),
 				hands_won: (node_obj['isWinner'] ? (user.hands_won + 1) : user.hands_won),
