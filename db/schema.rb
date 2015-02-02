@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150131053250) do
+ActiveRecord::Schema.define(version: 20150202134533) do
 
   create_table "api_keys", force: true do |t|
     t.string   "token"
@@ -200,6 +200,7 @@ ActiveRecord::Schema.define(version: 20150131053250) do
     t.string   "device_id"
     t.integer  "shootout_level",                                  default: 1
     t.integer  "level",                                           default: 0
+    t.decimal  "level_percentage",       precision: 10, scale: 0, default: 0
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
