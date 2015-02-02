@@ -1,6 +1,6 @@
 class Api::V1::UsersController < Api::V1::ApplicationController
 
-	before_action :find_user, only: [:show, :update, :my_friends, :my_friend_requests]
+	before_action :find_user, only: [:show, :update, :my_friends, :my_friend_requests, :friend_request_sent]
 
 	def create
 		params[:password] = "temp1234" if params[:password].blank?
@@ -38,10 +38,31 @@ class Api::V1::UsersController < Api::V1::ApplicationController
 		end
 	end
 
-	def my_friend_requests
+	def friend_request_sent
 		@friend_requests = @user.friend_requests.where(confirm: false)
-		render json: @friend_requests
-		
+		request_id = @friend_requests.pluck(:requested_to_id)
+		@users = User.where(id: request_id)
+		render json: {
+			users: @users.as_json({
+				only: [:device_avatar_id],
+				methods: [:full_name]
+			}),
+			requests: @friend_requests
+		}
+	end
+
+	def my_friend_requests
+		user_id = @user.id
+		@friend_requests = FriendRequest.where(requested_to_id: user_id, confirm: false)
+		request_id = @friend_requests.pluck(:user_id)
+		@users = User.where(id: request_id)
+		render json: {
+			users: @users.as_json({
+				only: [:device_avatar_id],
+				methods: [:full_name]
+			}),
+			requests: @friend_requests
+		}
 	end
 
 	def my_friends

@@ -38,6 +38,7 @@ Rails.application.routes.draw do
       end
       resources :users do
         member do
+          get :friend_request_sent
           get :my_friend_requests
           get :my_friends
         end

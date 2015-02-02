@@ -10,6 +10,8 @@ class User < ActiveRecord::Base
   has_many :tables, through: :table_users
   has_many :game_users
   has_many :games, through: :game_users
+  has_many :friend_requests, :dependent => :destroy, foreign_key: "requested_to_id"
+  has_many :friend_requests_sent, :dependent => :destroy, foreign_key: "user_id", class_name: "FriendRequest"
   has_many :friend_requests, :dependent => :destroy
   has_many :friendships, :dependent => :destroy
   has_many :friends, through: :friendships
