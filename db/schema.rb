@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150202134533) do
+ActiveRecord::Schema.define(version: 20150203115846) do
 
   create_table "api_keys", force: true do |t|
     t.string   "token"
@@ -92,6 +92,14 @@ ActiveRecord::Schema.define(version: 20150202134533) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "uuid"
+  end
+
+  create_table "login_histories", force: true do |t|
+    t.boolean  "active"
+    t.integer  "user_id"
+    t.string   "login_token"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "moves", force: true do |t|
@@ -196,13 +204,11 @@ ActiveRecord::Schema.define(version: 20150202134533) do
     t.decimal  "total_turns",            precision: 10, scale: 0, default: 0
     t.decimal  "all_ins",                precision: 10, scale: 0, default: 0
     t.decimal  "calls",                  precision: 10, scale: 0, default: 0
-    t.integer  "shootout_level",                                  default: 1
     t.string   "login_token"
     t.string   "device_id"
     t.integer  "shootout_level",                                  default: 1
     t.integer  "level",                                           default: 0
     t.decimal  "level_percentage",       precision: 10, scale: 0, default: 0
-
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

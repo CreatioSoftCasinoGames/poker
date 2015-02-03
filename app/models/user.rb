@@ -15,6 +15,7 @@ class User < ActiveRecord::Base
   has_many :friend_requests, :dependent => :destroy
   has_many :friendships, :dependent => :destroy
   has_many :friends, through: :friendships
+  has_many :login_histories, :dependent => :destroy
   #Roles = [:adimin, :default]
   #attr_accessor :name , :email
   has_attached_file :image,
@@ -80,6 +81,9 @@ class User < ActiveRecord::Base
   def set_joining_bonus
     self.chips = 10000
   end
+
+  #def update_login_history
+  #end
 
   def set_fb_login_details
     if fb_id

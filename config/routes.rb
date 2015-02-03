@@ -1,6 +1,8 @@
 require 'sidekiq/web'
 Rails.application.routes.draw do
 
+  resources :login_histories
+
   resources :economy_ranges
 
   resources :economy_bets
