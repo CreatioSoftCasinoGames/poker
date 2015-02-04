@@ -46,6 +46,11 @@ Rails.application.routes.draw do
         end
       end
       resources :sessions, only: [:create, :destroy]
+      resources :sessions do
+        member do
+          put :connect_facebook
+        end
+      end
       resources :table_config_users, only: [:create]
       get "table_configs/:game_type/tables" => "table_configs#get_game_type"
     end

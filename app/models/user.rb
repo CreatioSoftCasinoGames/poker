@@ -82,9 +82,6 @@ class User < ActiveRecord::Base
     self.chips = 10000
   end
 
-  #def update_login_history
-  #end
-
   def set_fb_login_details
     if fb_id
       password_generated = SecureRandom.hex(4)
