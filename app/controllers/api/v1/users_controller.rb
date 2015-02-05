@@ -1,6 +1,6 @@
 class Api::V1::UsersController < Api::V1::ApplicationController
 
-	before_action :find_user, only: [:show, :update, :my_friends, :my_friend_requests, :friend_request_sent]
+	before_action :find_user, only: [:show, :update, :my_friends, :my_friend_requests, :friend_request_sent, :send_in_game_gift]
 
 	def create
 		params[:password] = "temp1234" if params[:password].blank?
@@ -62,6 +62,15 @@ class Api::V1::UsersController < Api::V1::ApplicationController
 				methods: [:full_name]
 			}),
 			requests: @friend_requests
+		}
+	end
+
+	def send_in_game_gift
+		@in_game_gifts = InGameGift.all
+		render json: {
+			gifts_available: @in_game_gifts.as_json({
+				only: [:name, :cost]
+			})
 		}
 	end
 

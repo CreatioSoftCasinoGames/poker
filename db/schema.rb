@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150203115846) do
+ActiveRecord::Schema.define(version: 20150205095623) do
 
   create_table "api_keys", force: true do |t|
     t.string   "token"
@@ -92,6 +92,13 @@ ActiveRecord::Schema.define(version: 20150203115846) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "uuid"
+  end
+
+  create_table "in_game_gifts", force: true do |t|
+    t.string   "name"
+    t.decimal  "cost",       precision: 10, scale: 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "login_histories", force: true do |t|

@@ -1,6 +1,8 @@
 require 'sidekiq/web'
 Rails.application.routes.draw do
 
+  resources :in_game_gifts
+
   resources :login_histories
 
   resources :economy_ranges
@@ -43,6 +45,7 @@ Rails.application.routes.draw do
           get :friend_request_sent
           get :my_friend_requests
           get :my_friends
+          get :send_in_game_gift
         end
       end
       resources :sessions, only: [:create, :destroy]
