@@ -37,6 +37,7 @@ Rails.application.routes.draw do
       resources :users
       resources :games
       resources :friend_requests
+      resources :gift_requests
       resources :tables do
         get :assign, on: :collection
       end
@@ -46,6 +47,11 @@ Rails.application.routes.draw do
           get :my_friend_requests
           get :my_friends
           get :send_in_game_gift
+          get :gift_sent
+          get :gift_received
+          get :asked_for_gift_to
+          get :asked_for_gift_by
+          get :my_gifts
         end
       end
       resources :sessions, only: [:create, :destroy]

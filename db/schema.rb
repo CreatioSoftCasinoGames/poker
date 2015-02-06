@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150205095623) do
+ActiveRecord::Schema.define(version: 20150206084851) do
 
   create_table "api_keys", force: true do |t|
     t.string   "token"
@@ -92,6 +92,24 @@ ActiveRecord::Schema.define(version: 20150205095623) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "uuid"
+  end
+
+  create_table "gift_requests", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "send_to_id"
+    t.string   "gift_type"
+    t.boolean  "confirm",      default: false
+    t.boolean  "is_requested", default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "giftables", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "send_to_id"
+    t.string   "gift_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "in_game_gifts", force: true do |t|

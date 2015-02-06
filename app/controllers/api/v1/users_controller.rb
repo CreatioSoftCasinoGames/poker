@@ -1,6 +1,6 @@
 class Api::V1::UsersController < Api::V1::ApplicationController
 
-	before_action :find_user, only: [:show, :update, :my_friends, :my_friend_requests, :friend_request_sent, :send_in_game_gift]
+	before_action :find_user, only: [:show, :update, :my_friends, :my_friend_requests, :friend_request_sent, :send_in_game_gift, :gift_sent, :gift_received, :asked_for_gift_to, :asked_for_gift_by, :my_gifts]
 
 	def create
 		params[:password] = "temp1234" if params[:password].blank?
@@ -40,7 +40,6 @@ class Api::V1::UsersController < Api::V1::ApplicationController
 
 	def friend_request_sent
 		@friend_requests = @user.friend_requests.where(confirm: false)
-		request_id = @friend_requests.pluck(:requested_to_id)
 		render json: {
 			requests: @friend_requests.as_json({
 				only: [:id, :user_id, :requested_to_id, :confirm],
@@ -52,8 +51,6 @@ class Api::V1::UsersController < Api::V1::ApplicationController
 	def my_friend_requests
 		user_id = @user.id
 		@friend_requests = FriendRequest.where(requested_to_id: user_id, confirm: false)
-		request_id = @friend_requests.pluck(:user_id)
-		@users = User.where(id: request_id)
 		render json: {
 			requests: @friend_requests.as_json({
 				only: [:id, :user_id, :requested_to_id, :confirm],
@@ -79,6 +76,31 @@ class Api::V1::UsersController < Api::V1::ApplicationController
 				methods: [:full_name, :device_avatar_id]
 			})
 		}
+	end
+
+	def gift_sent
+		@sent_gift = @user.gift_requests.where(is_requested: nil)
+		render json: @sent_gift
+	end
+
+	def gift_received
+		@received_gift = GiftRequest.where(send_to_id: @user.id, is_requested: nil)
+		render json: @received_gift
+	end
+
+	def asked_for_gift_to
+		@gift_asked_to = @user.gift_requests.where(is_requested: true)
+		render json: @gift_asked_to
+	end
+
+	def asked_for_gift_by
+		@gift_asked_by = GiftRequest.where(send_to_id: @user.id, is_requested: true)
+		render json: @gift_asked_by
+	end
+
+	def my_gifts
+		@gifts = @user.gifts
+		render json: @gifts
 	end
 
 	def show

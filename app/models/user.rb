@@ -15,6 +15,9 @@ class User < ActiveRecord::Base
   has_many :friend_requests, :dependent => :destroy
   has_many :friendships, :dependent => :destroy
   has_many :friends, through: :friendships
+  has_many :giftable, :dependent => :destroy
+  has_many :gifts, through: :giftable
+  has_many :gift_requests, :dependent => :destroy
   has_many :login_histories, :dependent => :destroy
   #Roles = [:adimin, :default]
   #attr_accessor :name , :email
