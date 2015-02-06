@@ -51,7 +51,6 @@ Rails.application.routes.draw do
           get :gift_received
           get :asked_for_gift_to
           get :asked_for_gift_by
-          get :my_gifts
         end
       end
       resources :sessions, only: [:create, :destroy]

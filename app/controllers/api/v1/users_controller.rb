@@ -97,12 +97,7 @@ class Api::V1::UsersController < Api::V1::ApplicationController
 		@gift_asked_by = GiftRequest.where(send_to_id: @user.id, is_requested: true)
 		render json: @gift_asked_by
 	end
-
-	def my_gifts
-		@gifts = @user.gifts
-		render json: @gifts
-	end
-
+	
 	def show
 		render json: @user
 	end

@@ -6,7 +6,7 @@ class Api::V1::GiftRequestsController < Api::V1::ApplicationController
 		@user = User.where(login_token: params[:login_token]).first
 		if @user.present?
 			user_id = @user.id
-			@send_to = User.where(login_token: params[:send_to_token]).first
+			@send_to = LoginHistory.where(login_token: params[:send_to_token]).first
 			if @send_to.present?
 				send_to_id = @send_to.id
 				@friend = Friendship.where(user_id: user_id, friend_id: send_to_id).first
