@@ -41,13 +41,11 @@ class Api::V1::UsersController < Api::V1::ApplicationController
 	def friend_request_sent
 		@friend_requests = @user.friend_requests.where(confirm: false)
 		request_id = @friend_requests.pluck(:requested_to_id)
-		@users = User.where(id: request_id)
 		render json: {
-			users: @users.as_json({
-				only: [:device_avatar_id],
-				methods: [:full_name]
-			}),
-			requests: @friend_requests
+			requests: @friend_requests.as_json({
+				only: [:id, :user_id, :requested_to_id, :confirm],
+				methods: [:full_name, :device_avatar_id]
+			})
 		}
 	end
 
@@ -57,11 +55,10 @@ class Api::V1::UsersController < Api::V1::ApplicationController
 		request_id = @friend_requests.pluck(:user_id)
 		@users = User.where(id: request_id)
 		render json: {
-			users: @users.as_json({
-				only: [:device_avatar_id],
-				methods: [:full_name]
-			}),
-			requests: @friend_requests
+			requests: @friend_requests.as_json({
+				only: [:id, :user_id, :requested_to_id, :confirm],
+				methods: [:full_name, :device_avatar_id]
+			})
 		}
 	end
 
@@ -76,7 +73,12 @@ class Api::V1::UsersController < Api::V1::ApplicationController
 
 	def my_friends
 		@friends = @user.friends
-		render json: @friends
+		render json: {
+			friends: @friends.as_json({
+				only: [:id, :user_id, :friend_id],
+				methods: [:full_name, :device_avatar_id]
+			})
+		}
 	end
 
 	def show
