@@ -39,10 +39,10 @@ class Api::V1::UsersController < Api::V1::ApplicationController
 	end
 
 	def friend_request_sent
-		@friend_requests = @user.friend_requests.where(confirm: false)
+		@friend_requests = @user.friend_requests.where(confirmed: false)
 		render json: {
 			requests: @friend_requests.as_json({
-				only: [:id, :user_id, :requested_to_id, :confirm],
+				only: [:id, :user_id, :requested_to_id, :confirmed],
 				methods: [:full_name, :device_avatar_id]
 			})
 		}
@@ -50,10 +50,10 @@ class Api::V1::UsersController < Api::V1::ApplicationController
 
 	def my_friend_requests
 		user_id = @user.id
-		@friend_requests = FriendRequest.where(requested_to_id: user_id, confirm: false)
+		@friend_requests = FriendRequest.where(requested_to_id: user_id, confirmed: false)
 		render json: {
 			requests: @friend_requests.as_json({
-				only: [:id, :user_id, :requested_to_id, :confirm],
+				only: [:id, :user_id, :requested_to_id, :confirmed],
 				methods: [:full_name, :device_avatar_id]
 			})
 		}
@@ -69,9 +69,8 @@ class Api::V1::UsersController < Api::V1::ApplicationController
 	end
 
 	def my_friends
-		@friends = @user.friends
 		render json: {
-			friends: @friends.as_json({
+			friends: @user.friends.as_json({
 				only: [:id, :user_id, :friend_id],
 				methods: [:full_name, :device_avatar_id]
 			})
