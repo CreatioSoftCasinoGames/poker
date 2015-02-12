@@ -7,7 +7,7 @@ class FriendRequest < ActiveRecord::Base
 	validate :valid_request, :on => :create
 
 	def update_friend
-		if self.changed.include?(:confirmed) && confirmed
+		if confirmed
 			Friendship.create(user_id: self.user_id, friend_id: self.requested_to_id)
 			Friendship.create(friend_id: self.user_id, user_id: self.requested_to_id)
 		end
