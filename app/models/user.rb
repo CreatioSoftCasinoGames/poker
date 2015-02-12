@@ -32,6 +32,14 @@ class User < ActiveRecord::Base
     self.image? ? image.url(:avatar) : nil
   end
 
+  def num_friend_request
+    self.friend_requests.where(confirmed: false).count()
+  end
+
+  def method_name
+    self.gift_requests.where(confirmed: false).count()
+  end
+
   def folds_percent
     (folds * 100)/total_turns rescue 0
   end

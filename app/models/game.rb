@@ -44,7 +44,9 @@ class Game < ActiveRecord::Base
 				bets: user.bets + user_moves.select {|um| um.action == "bet" }.size,
 				checks: user.bets + user_moves.select {|um| um.action == "check" }.size,
 				all_ins: user.all_ins + user_moves.select {|um| um.action == "allin" }.size,
-				best_hand: best_hand
+				best_hand: best_hand,
+				shootout_win: (node_obj['shootoutWin'] ? (user.shootout_win + 1) : user.shootout_win),
+				sitandgo_win: (node_obj['sitAndGoWin'] ? (user.sitandgo_win + 1) : user.sitandgo_win),
 			})
 		end
 		params[:game_users_attributes] = game_users_attributes
