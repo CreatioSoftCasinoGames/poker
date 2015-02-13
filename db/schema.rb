@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150212072649) do
+ActiveRecord::Schema.define(version: 20150212122434) do
 
   create_table "api_keys", force: true do |t|
     t.string   "token"
@@ -201,9 +201,9 @@ ActiveRecord::Schema.define(version: 20150212072649) do
     t.string   "last_name"
     t.string   "role",                                            default: "PLAYER"
     t.boolean  "is_guest"
-    t.decimal  "chips",                  precision: 10, scale: 0
+    t.decimal  "chips",                  precision: 10, scale: 0, default: 10000
     t.decimal  "xp",                     precision: 10, scale: 0, default: 0
-    t.decimal  "diamonds",               precision: 10, scale: 0, default: 0
+    t.decimal  "diamonds",               precision: 10, scale: 0, default: 100
     t.string   "image_file_name"
     t.string   "image_content_type"
     t.integer  "image_file_size"
@@ -221,14 +221,16 @@ ActiveRecord::Schema.define(version: 20150212072649) do
     t.decimal  "total_turns",            precision: 10, scale: 0, default: 0
     t.decimal  "all_ins",                precision: 10, scale: 0, default: 0
     t.decimal  "calls",                  precision: 10, scale: 0, default: 0
+    t.integer  "shootout_level",                                  default: 1
     t.string   "login_token"
     t.string   "device_id"
-    t.integer  "shootout_level",                                  default: 1
-    t.integer  "level",                                           default: 0
+    t.integer  "level",                                           default: 1
     t.decimal  "level_percentage",       precision: 10, scale: 0, default: 0
     t.integer  "shootout_win",                                    default: 0
     t.integer  "sitandgo_win",                                    default: 0
     t.text     "best_hand_cards"
+    t.integer  "num_friend_request",                              default: 0
+    t.integer  "num_gift_request",                                default: 0
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

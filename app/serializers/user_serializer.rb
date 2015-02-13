@@ -21,5 +21,7 @@ class UserSerializer < ActiveModel::Serializer
               :diamonds,
               :xp,
               :level,
-              :level_percentage
+              :level_percentage,
+              :num_friend_request,
+              :num_gift_request
 end
