@@ -4,6 +4,7 @@ class GiftRequest < ActiveRecord::Base
 	has_many :gift_requests_sent
 	validate :search_requested_friend, on: :create
 	validate :valid_request, :on => :create
+	validate :set_coins, :on => :create
 
 	private
 
@@ -14,6 +15,12 @@ class GiftRequest < ActiveRecord::Base
 		else
 			self.errors.add(:base, "Requested User not present")
 		end
+	end
+
+	def set_coins
+		user_chips = User.where(id: user_id).pluck(:chips).first
+		chips = user_chips.to_f - 1000
+		user.update_attributes(chips: chips)
 	end
 
 	def valid_request

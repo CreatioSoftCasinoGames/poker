@@ -33,11 +33,11 @@ class User < ActiveRecord::Base
   end
 
   def num_friend_request
-    self.friend_requests.where(confirmed: false).count()
+    FriendRequest.where(requested_to_id: self.id, confirmed: false).count()
   end
 
   def method_name
-    self.gift_requests.where(confirmed: false).count()
+    GiftRequest.where(send_to_id: self.id, confirmed: false).count()
   end
 
   def folds_percent
