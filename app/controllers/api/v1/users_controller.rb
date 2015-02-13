@@ -79,22 +79,30 @@ class Api::V1::UsersController < Api::V1::ApplicationController
 
 	def gift_sent
 		@sent_gift = @user.gift_requests.where(is_requested: nil)
-		render json: @sent_gift
+		render json: {
+			sent_gift: @sent_gift
+		}
 	end
 
 	def gift_received
 		@received_gift = GiftRequest.where(send_to_id: @user.id, is_requested: nil)
-		render json: @received_gift
+		render json: {
+			received_gift: @received_gift.as_json
+		}
 	end
 
 	def asked_for_gift_to
 		@gift_asked_to = @user.gift_requests.where(is_requested: true)
-		render json: @gift_asked_to
+		render json: {
+			gift_asked_to: @gift_asked_to.as_json
+		}
 	end
 
 	def asked_for_gift_by
 		@gift_asked_by = GiftRequest.where(send_to_id: @user.id, is_requested: true)
-		render json: @gift_asked_by
+		render json: {
+			gift_asked_by: @gift_asked_by.as_json
+		}
 	end
 	
 	def show
