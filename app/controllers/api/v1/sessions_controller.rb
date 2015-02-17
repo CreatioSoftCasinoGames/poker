@@ -44,7 +44,6 @@ class Api::V1::SessionsController < Api::V1::ApplicationController
 		if @user.present?
 			login_history_id = LoginHistory.where(login_token: params[:id]).first.id
 			LoginHistory.update(login_history_id, active: 0)
-			@user.update_attributes(login_token: "")
 			session[:user_id] = nil
 			REDIS_CLIENT.srem("game_players", "game_player:#{params[:id]}")
 			render json: {

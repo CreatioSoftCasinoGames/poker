@@ -1,15 +1,16 @@
 class GiftRequest < ActiveRecord::Base
 
 	belongs_to :user
+	attr_accessor :send_to_token
 	has_many :gift_requests_sent
 	validate :search_requested_friend, on: :create
 	validate :valid_request, :on => :create
-	validate :set_coins, :on => :create
+	before_create :set_coins
 
 	private
 
 	def search_requested_friend
-		send_to = User.where(login_token: send_to_id).first
+		send_to = User.where(login_token: send_to_token).first || LoginHistory.where(login_token: send_to_token).first.user
 		unless send_to.blank?	
 			self.send_to_id = send_to.id
 		else
