@@ -89,7 +89,7 @@ class Api::V1::UsersController < Api::V1::ApplicationController
 	end
 
 	def gift_received
-		@received_gift = GiftRequest.where(send_to_id: @user.id, confirm: true)
+		@received_gift = GiftRequest.where(send_to_id: @user.id, confirm: false)
 		render json: {
 			received_gift: @received_gift.as_json({
 				only: [:id, :user_id, :send_to_id, :confirmed],
