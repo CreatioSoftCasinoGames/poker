@@ -21,8 +21,6 @@ class Api::V1::UsersController < Api::V1::ApplicationController
 
 	def update
 		if @user.update_attributes(user_params)
-			# p user_params
-
 			render json: {
 				user: @user.as_json({
 						only: user_params.keys
