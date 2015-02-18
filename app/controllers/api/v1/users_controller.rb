@@ -63,7 +63,7 @@ class Api::V1::UsersController < Api::V1::ApplicationController
 		@in_game_gifts = InGameGift.all
 		render json: {
 			gifts_available: @in_game_gifts.as_json({
-				only: [:name, :cost]
+				only: [:name, :cost],
 				methods: [:full_name, :device_avatar_id]
 			})
 		}
@@ -82,17 +82,17 @@ class Api::V1::UsersController < Api::V1::ApplicationController
 		@sent_gift = @user.gift_requests.where(is_requested: nil)
 		render json: {
 			sent_gift: @sent_gift.as_json({
-				only: [:id, :user_id, :send_to_id, :confirmed]
+				only: [:id, :user_id, :send_to_id, :confirmed],
 				methods: [:full_name, :device_avatar_id]
 			})
 		}
 	end
 
 	def gift_received
-		@received_gift = GiftRequest.where(send_to_id: @user.id, is_requested: nil)
+		@received_gift = GiftRequest.where(send_to_id: @user.id, confirm: true)
 		render json: {
 			received_gift: @received_gift.as_json({
-				only: [:id, :user_id, :send_to_id, :confirmed]
+				only: [:id, :user_id, :send_to_id, :confirmed],
 				methods: [:full_name, :device_avatar_id]
 			})
 		}
@@ -102,7 +102,7 @@ class Api::V1::UsersController < Api::V1::ApplicationController
 		@gift_asked_to = @user.gift_requests.where(is_requested: true)
 		render json: {
 			gift_asked_to: @gift_asked_to.as_json({
-				only: [:id, :user_id, :send_to_id, :confirmed]
+				only: [:id, :user_id, :send_to_id, :confirmed],
 				methods: [:full_name, :device_avatar_id]
 			})
 		}
@@ -112,7 +112,7 @@ class Api::V1::UsersController < Api::V1::ApplicationController
 		@gift_asked_by = GiftRequest.where(send_to_id: @user.id, is_requested: true)
 		render json: {
 			gift_asked_by: @gift_asked_by.as_json({
-				only: [:id, :user_id, :send_to_id, :confirmed]
+				only: [:id, :user_id, :send_to_id, :confirmed],
 				methods: [:full_name, :device_avatar_id]
 			})
 		}
