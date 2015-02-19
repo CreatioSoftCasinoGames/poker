@@ -16,6 +16,7 @@ class Game < ActiveRecord::Base
 		game_moves = self.moves.all
 		data.each do |node_obj|
 			game_user = game_users.where(user_id: node_obj['playerId']).first
+			tournament_users_attributes = []
 			user = game_user.user
 			game_users_attributes.push({
 				id: game_user.id,
@@ -28,6 +29,15 @@ class Game < ActiveRecord::Base
 			best_hand_rank = (node_obj['handRank'].to_f > user.best_hand_rank.to_f) ? node_obj['handRank'] : user.best_hand_rank
 			best_hand = (node_obj['handRank'].to_f > user.best_hand_rank.to_f) ? node_obj['handMessage'] : user.best_hand
 			user_moves = game_moves.select {|gm| gm.user_id == user.id }
+			Tournament.active.each do |tournament|
+				tournament_user = TournamentUser.where(tournament_id: tournament.id, user_id: user.id).first
+				tournament_users_attributes.push({
+	        id: tournament_user.try(:id),
+	        user_id: user.id,
+	        tournament_id: tournament.id,
+	        chips: tournament_user.try(:chips).to_f - game_user.round_chips + node_obj['remainingChips']
+	      })
+			end
 			users_attributes.push({
 				id: user.id,
 				chips: user.chips - game_user.round_chips + node_obj['remainingChips'],
@@ -47,6 +57,7 @@ class Game < ActiveRecord::Base
 				best_hand: best_hand,
 				shootout_win: (node_obj['shootoutWin'] ? (user.shootout_win + 1) : user.shootout_win),
 				sitandgo_win: (node_obj['sitAndGoWin'] ? (user.sitandgo_win + 1) : user.sitandgo_win),
+				tournament_users_attributes: tournament_users_attributes
 			})
 		end
 		params[:game_users_attributes] = game_users_attributes
