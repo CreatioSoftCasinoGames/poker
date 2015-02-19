@@ -1,0 +1,26 @@
+- model_class = TournamentConfig
+div class="page-header"
+  h1=t '.title', :default => model_class.model_name.human.titleize
+
+p
+  strong= model_class.human_attribute_name(:start_date) + ':'
+  br
+  = @tournament_config.start_date
+p
+  strong= model_class.human_attribute_name(:end_date) + ':'
+  br
+  = @tournament_config.end_date
+p
+  strong= model_class.human_attribute_name(:period) + ':'
+  br
+  = @tournament_config.period
+p
+  strong= model_class.human_attribute_name(:days) + ':'
+  br
+  = @tournament_config.days
+
+= link_to t('.back', :default => t("helpers.links.back")), tournament_configs_path, :class => 'btn btn-default'
+'
+= link_to t('.edit', :default => t("helpers.links.edit")), edit_tournament_config_path(@tournament_config), :class => 'btn btn-default'
+'
+= link_to t('.destroy', :default => t("helpers.links.destroy")), tournament_config_path(@tournament_config), :method => "delete", :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-danger'
