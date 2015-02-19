@@ -4,8 +4,8 @@ class Api::V1::SessionsController < Api::V1::ApplicationController
 		if params[:fb_id]
 			@user = User.where(fb_id: params[:fb_id]).first_or_initialize
 			if @user.new_record?
-				@user.attributes = {email: params[:email], first_name: params[:first_name], last_name: params[:last_name]}
-				if @user.save
+				# @user.attributes = {email: params[:email], first_name: params[:first_name], last_name: params[:last_name]}
+				if @user.save(user_params)
 					@success = true
 				else
 					@success = false
@@ -88,6 +88,12 @@ class Api::V1::SessionsController < Api::V1::ApplicationController
 				message: "Only guest user can synced with facebook!"
 			}
 		end
+	end
+
+	private
+
+	def user_params
+		params.require(:user).permit(:first_name, :last_name, :fb_id, :email, fb_friend_list: [])
 	end
 
 end

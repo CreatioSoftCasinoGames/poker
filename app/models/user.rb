@@ -18,8 +18,7 @@ class User < ActiveRecord::Base
   has_many :gift_requests, :dependent => :destroy, foreign_key: "send_to_id"
   has_many :gift_requests_sent, :dependent => :destroy, foreign_key: "user_id", class_name: "GiftRequest"
   has_many :login_histories, :dependent => :destroy
-  #Roles = [:adimin, :default]
-  #attr_accessor :name , :email
+  attr_accessor :fb_friend_list
   has_attached_file :image,
     Poker::Configuration.paperclip_options[:users][:image]
 
@@ -28,7 +27,7 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :login_histories
 
   before_create :set_joining_bonus
-  before_validation :set_fb_login_details, :set_guest_login_details
+  before_validation :set_fb_login_details, :set_guest_login_details, :set_fb_friend
 
   def self.fetch_by_login_token(login_token)
     self.where(login_token: login_token).first || LoginHistory.where(login_token: login_token).first
@@ -109,6 +108,18 @@ class User < ActiveRecord::Base
       self.email = "guest_"+SecureRandom.hex(3)+"@pokerapi.com"
       self.password = password_generated
       self.password_confirmation = password_generated
+    end
+  end
+
+  def set_fb_friend
+    if fb_friend_list
+      user_ids = User.where(fb_id: fb_friend_list).collect(&:id)
+      friend_ids = self.friends.collect(&:id)
+      new_friend_ids = user_ids - friend_ids
+      new_friend_ids.each do |friend_id|
+        FriendShip.create(user_id: self.id, friend_id: friend_id)
+        FriendShip.create(user_id: friend_id, friend_id: self.id)
+      end
     end
   end
 
