@@ -25,6 +25,8 @@ class User < ActiveRecord::Base
 
   validates_attachment :image, content_type: { content_type: /\Aimage\/.*\Z/ }
 
+  accepts_nested_attributes_for :login_histories
+
   before_create :set_joining_bonus
   before_validation :set_fb_login_details, :set_guest_login_details
 
