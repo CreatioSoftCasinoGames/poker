@@ -4,7 +4,6 @@ class Api::V1::FriendRequestsController < Api::V1::ApplicationController
 
 	before_action :get_friend_requests, only: [:show, :destroy, :update]
 	def create
-		p params[:requested_to_id]
 		@friend_request = current_user.friend_requests_sent.build(requested_to_id: params[:requested_to_id])
 		if @friend_request.save
 			p params[:requested_to_id]
