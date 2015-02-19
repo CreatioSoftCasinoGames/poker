@@ -79,7 +79,7 @@ class Api::V1::UsersController < Api::V1::ApplicationController
 	end
 
 	def gift_sent
-		@sent_gift = @user.gift_requests.where(is_requested: nil)
+		@sent_gift = @user.gift_requests.where(is_requested: false)
 		render json: {
 			sent_gift: @sent_gift.as_json({
 				only: [:id, :user_id, :send_to_id, :confirmed],
