@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
   has_many :table_users
   has_many :tables, through: :table_users
   has_many :game_users
+  has_many :tournament_users
   has_many :games, through: :game_users
   has_many :friend_requests, :dependent => :destroy, foreign_key: "requested_to_id"
   has_many :friend_requests_sent, :dependent => :destroy, foreign_key: "user_id", class_name: "FriendRequest"
@@ -19,6 +20,9 @@ class User < ActiveRecord::Base
   has_many :gift_requests_sent, :dependent => :destroy, foreign_key: "user_id", class_name: "GiftRequest"
   has_many :login_histories, :dependent => :destroy
   attr_accessor :fb_friend_list
+  #Roles = [:adimin, :default]
+  #attr_accessor :name , :email
+  accepts_nested_attributes_for :tournament_users
   has_attached_file :image,
     Poker::Configuration.paperclip_options[:users][:image]
 

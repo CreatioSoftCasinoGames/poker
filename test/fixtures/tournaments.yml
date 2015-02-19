@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  tournament_config_id: 1
+  start_date: 2015-02-19
+  end_date: 2015-02-19
+  active: false
+
+two:
+  tournament_config_id: 1
+  start_date: 2015-02-19
+  end_date: 2015-02-19
+  active: false
