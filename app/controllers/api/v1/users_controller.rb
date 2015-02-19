@@ -38,23 +38,13 @@ class Api::V1::UsersController < Api::V1::ApplicationController
 
 	def friend_request_sent
 		@friend_requests = @user.friend_requests.where(confirmed: false)
-		render json: {
-			requests: @friend_requests.as_json({
-				only: [:id, :user_id, :requested_to_id, :confirmed],
-				methods: [:full_name, :device_avatar_id]
-			})
-		}
+		render json: @friend_requests
 	end
 
 	def my_friend_requests
 		user_id = @user.id
 		@friend_requests = FriendRequest.where(requested_to_id: user_id, confirmed: false)
-		render json: {
-			requests: @friend_requests.as_json({
-				only: [:id, :user_id, :requested_to_id, :confirmed],
-				methods: [:full_name, :device_avatar_id]
-			})
-		}
+		render json: @friend_requests
 	end
 
 	def send_in_game_gift
@@ -70,7 +60,7 @@ class Api::V1::UsersController < Api::V1::ApplicationController
 	def my_friends
 		render json: {
 			friends: @user.friends.as_json({
-				only: [:login_token, :device_avatar_id],
+				only: [:friend_token, :device_avatar_id],
 				methods: [:full_name]
 			})
 		}

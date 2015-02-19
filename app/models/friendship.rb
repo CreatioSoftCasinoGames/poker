@@ -11,4 +11,8 @@ class Friendship < ActiveRecord::Base
 		user.device_avtar_id
 	end
 
+	def friend_token
+		User.where(friend_id: self.friend_id).first.login_token
+	end
+
 end

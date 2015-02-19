@@ -6,6 +6,7 @@ class Api::V1::FriendRequestsController < Api::V1::ApplicationController
 	def create
 		@friend_request = current_user.friend_requests_sent.build(requested_to_id: params[:requested_to_id])
 		if @friend_request.save
+			p params[:requested_to_id]
 			render json: @friend_request
 		else
 			render json: {
