@@ -28,6 +28,10 @@ class User < ActiveRecord::Base
   before_create :set_joining_bonus
   before_validation :set_fb_login_details, :set_guest_login_details
 
+  def self.fetch_by_login_token(login_token)
+    self.where(login_token: login_token).first || LoginHistory.where(login_token: login_token).first
+  end
+
   def avatar
     self.image? ? image.url(:avatar) : nil
   end
