@@ -258,6 +258,7 @@ ActiveRecord::Schema.define(version: 20150219134039) do
     t.text     "best_hand_cards"
     t.integer  "num_friend_request",                              default: 0
     t.integer  "num_gift_request",                                default: 0
+    t.boolean  "online",                                          default: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

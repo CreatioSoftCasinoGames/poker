@@ -1,6 +1,7 @@
 class FriendRequest < ActiveRecord::Base
 
 	belongs_to :user
+	belongs_to :requested_to, foreign_key: :requested_to_id, class_name: "User"
 	has_many :friend_requests_sent
 	before_update :update_friend
 	validate :search_requested_friend, on: :create
@@ -15,11 +16,11 @@ class FriendRequest < ActiveRecord::Base
 	end
 
 	def user_login_token
-		User.where(id: self.user_id).first.login_token
+		user.login_token
 	end
 
 	def requested_to_token
-		User.where(id: self.requested_to_id).first.login_token
+		requested_to.login_token
 	end
 
 	def device_avatar_id
