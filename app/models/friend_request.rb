@@ -6,7 +6,7 @@ class FriendRequest < ActiveRecord::Base
 	before_update :update_friend
 	validate :search_requested_friend, on: :create
 	validate :valid_request, :on => :create
-	attr_accessor :requested_to_id
+	# attr_accessor :requested_to_id
 
 	def update_friend
 		if confirmed
@@ -20,7 +20,7 @@ class FriendRequest < ActiveRecord::Base
 	end
 
 	def requested_to_token
-		requested_to.login_token
+		User.where(id: requested_to_id).first.login_token
 	end
 
 	def device_avatar_id
