@@ -50,11 +50,13 @@ class Api::V1::UsersController < Api::V1::ApplicationController
 	def send_in_game_gift
 		@in_game_gifts = InGameGift.all
 		render json: @in_game_gifts
-		}
 	end
 
 	def my_friends
-		render json: @user.friends
+		render json: @user.friends.as_json({
+			only: [:login_token, :online, :device_avatar_id],
+			methods: [:full_name]
+		})
 	end
 
 	def gift_sent
@@ -73,7 +75,7 @@ class Api::V1::UsersController < Api::V1::ApplicationController
 	end
 
 	def asked_for_gift_by
-		@gift_asked_by = GiftRequest.where(send_to_id: @user.id, is_requested: true)
+		@gift_asked_by = @user.gift_requests.where(is_requested: true)
 		render json: @gift_asked_by
 	end
 	
