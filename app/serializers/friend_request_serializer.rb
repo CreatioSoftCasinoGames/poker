@@ -4,5 +4,6 @@ class FriendRequestSerializer < ActiveModel::Serializer
 						 :requested_to_token, 
 						 :confirmed, 
 						 :device_avatar_id, 
-						 :full_name
+						 :full_name,
+						 :image_url
 end

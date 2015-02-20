@@ -15,6 +15,10 @@ class FriendRequest < ActiveRecord::Base
 		end
 	end
 
+	def image_url
+		requested_to.image_url
+	end
+
 	def user_login_token
 		user.login_token
 	end

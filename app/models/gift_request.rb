@@ -24,6 +24,10 @@ class GiftRequest < ActiveRecord::Base
 		[user.first_name, user.last_name].join(" ")
 	end
 
+	def image_url
+		reciever.image_url
+	end
+
 	private
 
 	def search_requested_friend

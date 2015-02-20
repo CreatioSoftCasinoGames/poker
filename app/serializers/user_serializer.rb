@@ -27,5 +27,6 @@ class UserSerializer < ActiveModel::Serializer
               :num_friend_request,
               :num_gift_request,
               :is_friend,
-              :is_requested
+              :is_requested,
+              :image_url
 end

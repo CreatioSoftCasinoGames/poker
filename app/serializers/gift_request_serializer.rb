@@ -4,5 +4,6 @@ class GiftRequestSerializer < ActiveModel::Serializer
 	           :send_to_token,
 	           :full_name,
 	           :device_avatar_id,
-	           :confirmed
+	           :confirmed,
+	           :image_url
 end
