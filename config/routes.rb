@@ -63,6 +63,11 @@ Rails.application.routes.draw do
       end
       resources :table_config_users, only: [:create]
       get "table_configs/:game_type/tables" => "table_configs#get_game_type"
+      resources :tournament_configs do
+        member do
+          get :leader_board
+        end
+      end
     end
   end
 

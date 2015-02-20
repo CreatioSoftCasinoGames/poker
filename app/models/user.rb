@@ -76,6 +76,12 @@ class User < ActiveRecord::Base
   def full_name
     [first_name, last_name].join(" ")
   end
+  
+  def image_url 
+    if fb_id
+      "http://graph.facebook.com/#{fb_id}/picture"
+    end
+  end
 
   def preferred_table_config
     table_config_users.where(active: true).first
