@@ -33,7 +33,7 @@ class Api::V1::SessionsController < Api::V1::ApplicationController
 		end
 		if @user.present?
 			login_token = SecureRandom.hex(5)
-			if @user.update_attributes(login_token: login_token, login_histories_attributes: {id: nil, active: true, login_token: login_token })
+			if @user.update_attributes(login_token: login_token, online: true, login_histories_attributes: {id: nil, active: true, login_token: login_token })
 				render json: @user
 			else
 				render json: @user.errors.full_messages.join(", ")
@@ -48,7 +48,7 @@ class Api::V1::SessionsController < Api::V1::ApplicationController
 	
 		if @user.present?
 			login_history_id = @user.login_histories.where(login_histories: {login_token: params[:id]}).first.id
-			if @user.update_attributes(login_histories_attributes: {id: login_history_id ,active: false})
+			if @user.update_attributes(online: false, login_histories_attributes: {id: login_history_id ,active: false})
 				REDIS_CLIENT.srem("game_players", "game_player:#{params[:id]}")
 				render json: {
 					success: true,

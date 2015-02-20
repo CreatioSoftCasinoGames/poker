@@ -7,6 +7,22 @@ class GiftRequest < ActiveRecord::Base
 	validate :valid_request, :on => :create
 	before_create :set_coins
 
+	def user_login_token
+		User.where(id: self.user_id).first.login_token
+	end
+
+	def send_to_token
+		User.where(id: self.send_to_id).first.login_token
+	end
+
+	def device_avatar_id
+		user.device_avatar_id
+	end
+
+	def full_name
+		[user.first_name, user.last_name].join(" ")
+	end
+
 	private
 
 	def search_requested_friend

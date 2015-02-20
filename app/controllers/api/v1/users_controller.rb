@@ -49,61 +49,34 @@ class Api::V1::UsersController < Api::V1::ApplicationController
 
 	def send_in_game_gift
 		@in_game_gifts = InGameGift.all
-		render json: {
-			gifts_available: @in_game_gifts.as_json({
-				only: [:name, :cost],
-				methods: [:full_name, :device_avatar_id]
-			})
-		}
+		render json: @in_game_gifts
 	end
 
 	def my_friends
-		render json: {
-			friends: @user.friends.as_json({
-				only: [:friend_token, :device_avatar_id, :online],
-				methods: [:full_name]
-			})
-		}
+		render json: @user.friends.as_json({
+			only: [:login_token, :online, :device_avatar_id],
+			methods: [:full_name]
+		})
 	end
 
 	def gift_sent
 		@sent_gift = @user.gift_requests.where(is_requested: false)
-		render json: {
-			sent_gift: @sent_gift.as_json({
-				only: [:id, :user_id, :send_to_id, :confirmed],
-				methods: [:full_name, :device_avatar_id]
-			})
-		}
+		render json: @sent_gift
 	end
 
 	def gift_received
 		@received_gift = GiftRequest.where(send_to_id: @user.id, confirm: false)
-		render json: {
-			received_gift: @received_gift.as_json({
-				only: [:id, :user_id, :send_to_id, :confirmed],
-				methods: [:full_name, :device_avatar_id]
-			})
-		}
+		render json: @received_gift
 	end
 
 	def asked_for_gift_to
 		@gift_asked_to = @user.gift_requests.where(is_requested: true)
-		render json: {
-			gift_asked_to: @gift_asked_to.as_json({
-				only: [:id, :user_id, :send_to_id, :confirmed],
-				methods: [:full_name, :device_avatar_id]
-			})
-		}
+		render json: @gift_asked_to
 	end
 
 	def asked_for_gift_by
-		@gift_asked_by = GiftRequest.where(send_to_id: @user.id, is_requested: true)
-		render json: {
-			gift_asked_by: @gift_asked_by.as_json({
-				only: [:id, :user_id, :send_to_id, :confirmed],
-				methods: [:full_name, :device_avatar_id]
-			})
-		}
+		@gift_asked_by = @user.gift_requests.where(is_requested: true)
+		render json: @gift_asked_by
 	end
 	
 	def show
@@ -118,6 +91,7 @@ class Api::V1::UsersController < Api::V1::ApplicationController
 
 	def find_user
 		@user = User.where(login_token: params[:id]).first
+		(render json: {message: "User not found", success: false}) if @user.blank?
 	end
 
 end

@@ -50,20 +50,23 @@ class User < ActiveRecord::Base
   end
 
   def folds_percent
-    (folds * 100)/total_turns.to_f rescue 0
+    percentage = (folds * 100)/total_turns.to_f
+    0 if percentage.nan?
   end
 
   def checks_percent
-    (checks * 100)/total_turns.to_f rescue 0
+    percentage = (checks * 100)/total_turns.to_f
+    0 if percentage.nan?
   end
 
   def bets_percent
-    (checks * 100)/total_turnsto_f rescue 0
-    ((bets + all_ins + raises) * 100)/total_turns.to_f rescue 0
+    percentage = ((bets + all_ins + raises) * 100)/total_turns.to_f
+    0 if percentage.nan?
   end
 
   def calls_percent
-    (calls * 100)/total_turns.to_f rescue 0
+    percentage = (calls * 100)/total_turns.to_f
+    0 if percentage.nan?
   end
 
   def player_since
