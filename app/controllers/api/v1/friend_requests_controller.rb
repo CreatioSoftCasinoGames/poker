@@ -39,7 +39,7 @@ class Api::V1::FriendRequestsController < Api::V1::ApplicationController
 	private
 
 	def current_user
-		User.where(login_token: params[:user_id]).first
+		User.where(login_token: params[:login_token]).first
 	end
 
 	def friend_request_params
