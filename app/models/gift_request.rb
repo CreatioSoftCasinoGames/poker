@@ -1,18 +1,19 @@
 class GiftRequest < ActiveRecord::Base
 
 	belongs_to :user
-	attr_accessor :send_to_token
+	attr_accessor :send_token
 	has_many :gift_requests_sent
 	validate :search_requested_friend, on: :create
 	validate :valid_request, :on => :create
 	before_create :set_coins
+	belongs_to :reciever, class_name: "User", foreign_key: "send_to_id"
 
 	def user_login_token
-		User.where(id: self.user_id).first.login_token
+		user.login_token
 	end
 
 	def send_to_token
-		User.where(id: self.send_to_id).first.login_token
+		reciever.login_token
 	end
 
 	def device_avatar_id
@@ -26,8 +27,8 @@ class GiftRequest < ActiveRecord::Base
 	private
 
 	def search_requested_friend
-		send_to = User.where(login_token: send_to_token).first || LoginHistory.where(login_token: send_to_token).first.user
-		unless send_to.blank?	
+		send_to = User.fetch_by_login_token(send_token)
+		unless send_to.blank?
 			self.send_to_id = send_to.id
 		else
 			self.errors.add(:base, "Requested User not present")
@@ -35,9 +36,7 @@ class GiftRequest < ActiveRecord::Base
 	end
 
 	def set_coins
-		user_chips = User.where(id: user_id).pluck(:chips).first
-		chips = user_chips.to_f - 1000
-		user.update_attributes(chips: chips)
+		self.user.chips = user.chips.to_f - 1000
 	end
 
 	def valid_request

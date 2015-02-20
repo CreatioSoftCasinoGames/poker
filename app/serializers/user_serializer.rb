@@ -25,5 +25,7 @@ class UserSerializer < ActiveModel::Serializer
               :shootout_win,
               :sitandgo_win,
               :num_friend_request,
-              :num_gift_request
+              :num_gift_request,
+              :is_friend,
+              :is_requested
 end

@@ -13,13 +13,15 @@ class User < ActiveRecord::Base
   has_many :games, through: :game_users
   has_many :friend_requests, :dependent => :destroy, foreign_key: "requested_to_id"
   has_many :friend_requests_sent, :dependent => :destroy, foreign_key: "user_id", class_name: "FriendRequest"
-  has_many :friend_requests, :dependent => :destroy
+  # has_many :friend_requests, :dependent => :destroy
+
   has_many :friendships, :dependent => :destroy
   has_many :friends, through: :friendships
   has_many :gift_requests, :dependent => :destroy, foreign_key: "send_to_id"
   has_many :gift_requests_sent, :dependent => :destroy, foreign_key: "user_id", class_name: "GiftRequest"
   has_many :login_histories, :dependent => :destroy
-  attr_accessor :fb_friend_list
+  has_many :unconfirmed_gift_requests, -> { where(confirmed: false) }, class_name: "GiftRequest", foreign_key: "send_to_id"
+  attr_accessor :fb_friend_list, :is_friend, :is_requested
   #Roles = [:adimin, :default]
   #attr_accessor :name , :email
   accepts_nested_attributes_for :tournament_users
@@ -34,7 +36,7 @@ class User < ActiveRecord::Base
   before_validation :set_fb_login_details, :set_guest_login_details, :set_fb_friend
 
   def self.fetch_by_login_token(login_token)
-    self.where(login_token: login_token).first || LoginHistory.where(login_token: login_token).first
+    self.where(login_token: login_token).first || LoginHistory.where(login_token: login_token).first.user
   end
 
   def avatar
@@ -46,7 +48,7 @@ class User < ActiveRecord::Base
   end
 
   def num_gift_request
-    GiftRequest.where(send_to_id: self.id, confirm: false).count()
+    GiftRequest.where(send_to_id: self.id, confirmed: false).count()
   end
 
   def folds_percent

@@ -3,10 +3,10 @@ class Api::V1::FriendRequestsController < Api::V1::ApplicationController
 	#skip_before_filter :authenticate_user
 
 	before_action :get_friend_requests, only: [:show, :destroy, :update]
+
 	def create
-		@friend_request = current_user.friend_requests_sent.build(requested_to_id: params[:requested_to_id])
+		@friend_request = current_user.friend_requests_sent.build(requested_token: params[:requested_token])
 		if @friend_request.save
-			p params[:requested_to_id]
 			render json: @friend_request
 		else
 			render json: {
@@ -39,7 +39,7 @@ class Api::V1::FriendRequestsController < Api::V1::ApplicationController
 	private
 
 	def current_user
-		User.where(login_token: params[:login_token]).first
+		User.find_by_login_token(params[:login_token])
 	end
 
 	def friend_request_params

@@ -65,8 +65,7 @@ class Api::V1::UsersController < Api::V1::ApplicationController
 	end
 
 	def gift_received
-		@received_gift = GiftRequest.where(send_to_id: @user.id, confirm: false)
-		render json: @received_gift
+		render json: @user.unconfirmed_gift_requests
 	end
 
 	def asked_for_gift_to
@@ -80,6 +79,10 @@ class Api::V1::UsersController < Api::V1::ApplicationController
 	end
 	
 	def show
+		unless api_current_user.blank?
+			@user.is_friend    = api_current_user.friendships.collect(&:friend_id).include?(@user.id)
+			@user.is_requested = FriendRequest.where(user_id: [api_current_user.id, @user.id], requested_to_id: [api_current_user.id, @user.id]).present?
+		end
 		render json: @user
 	end
 
