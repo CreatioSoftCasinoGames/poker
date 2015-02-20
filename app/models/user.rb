@@ -121,8 +121,8 @@ class User < ActiveRecord::Base
       friend_ids = self.friends.collect(&:id)
       new_friend_ids = user_ids - friend_ids
       new_friend_ids.each do |friend_id|
-        FriendShip.create(user_id: self.id, friend_id: friend_id)
-        FriendShip.create(user_id: friend_id, friend_id: self.id)
+        Friendship.create(user_id: self.id, friend_id: friend_id)
+        Friendship.create(user_id: friend_id, friend_id: self.id)
       end
     end
   end
