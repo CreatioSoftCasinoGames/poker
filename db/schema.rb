@@ -199,6 +199,7 @@ ActiveRecord::Schema.define(version: 20150220141612) do
     t.decimal  "chips",         precision: 10, scale: 0
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "rank",                                   default: 0
   end
 
   create_table "tournaments", force: true do |t|
