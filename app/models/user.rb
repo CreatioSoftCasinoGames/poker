@@ -36,7 +36,9 @@ class User < ActiveRecord::Base
   before_validation :set_fb_login_details, :set_guest_login_details, :set_fb_friend
 
   def self.fetch_by_login_token(login_token)
-    self.where(login_token: login_token).first || LoginHistory.where(login_token: login_token).first.user
+    if login_token
+      self.where(login_token: login_token).first || LoginHistory.where(login_token: login_token).first.user
+    end
   end
 
   def avatar
@@ -53,32 +55,32 @@ class User < ActiveRecord::Base
 
   def folds_percent
     percentage = (folds * 100)/total_turns.to_f
-    0 if percentage.nan?
+    percentage.nan? ? 0 : percentage
   end
 
   def checks_percent
     percentage = (checks * 100)/total_turns.to_f
-    0 if percentage.nan?
+    percentage.nan? ? 0 : percentage
   end
 
   def bets_percent
     percentage = ((bets + all_ins + raises) * 100)/total_turns.to_f
-    0 if percentage.nan?
+    percentage.nan? ? 0 : percentage
   end
 
   def calls_percent
     percentage = (calls * 100)/total_turns.to_f
-    0 if percentage.nan?
+    percentage.nan? ? 0 : percentage
   end
 
   def sitandgo_percent
     percentage = (sitandgo_win * 100)/sitandgo_played.to_f
-    0 if percentage.nan?
+    percentage.nan? ? 0 : percentage
   end
 
   def shootout_percent
     percentage = (shootout_win * 100)/shootout_played.to_f
-    0 if percentage.nan?
+    percentage.nan? ? 0 : percentage
   end
 
   def player_since
