@@ -28,5 +28,7 @@ class UserSerializer < ActiveModel::Serializer
               :num_gift_request,
               :is_friend,
               :is_requested,
-              :image_url
+              :is_facebook_connected,
+              :image_url, 
+              :new_fb_user
 end

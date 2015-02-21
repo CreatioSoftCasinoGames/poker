@@ -10,5 +10,9 @@ class TournamentUser < ActiveRecord::Base
 	def image_url
 		user.image_url
 	end
+
+	def device_avatar_id
+		user.device_avatar_id
+	end
 	
 end

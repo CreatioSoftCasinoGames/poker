@@ -13,7 +13,6 @@ class User < ActiveRecord::Base
   has_many :games, through: :game_users
   has_many :friend_requests, :dependent => :destroy, foreign_key: "requested_to_id"
   has_many :friend_requests_sent, :dependent => :destroy, foreign_key: "user_id", class_name: "FriendRequest"
-  # has_many :friend_requests, :dependent => :destroy
 
   has_many :friendships, :dependent => :destroy
   has_many :friends, through: :friendships
@@ -21,9 +20,7 @@ class User < ActiveRecord::Base
   has_many :gift_requests_sent, :dependent => :destroy, foreign_key: "user_id", class_name: "GiftRequest"
   has_many :login_histories, :dependent => :destroy
   has_many :unconfirmed_gift_requests, -> { where(confirmed: false) }, class_name: "GiftRequest", foreign_key: "send_to_id"
-  attr_accessor :fb_friend_list, :is_friend, :is_requested
-  #Roles = [:adimin, :default]
-  #attr_accessor :name , :email
+  attr_accessor :fb_friend_list, :is_friend, :is_requested, :new_fb_user
   accepts_nested_attributes_for :tournament_users
   has_attached_file :image,
     Poker::Configuration.paperclip_options[:users][:image]
@@ -84,6 +81,10 @@ class User < ActiveRecord::Base
       "http://graph.facebook.com/#{fb_id}/picture"
     end
   end
+
+  # def device_avatar_id
+  #   user.device_avatar_id
+  # end
 
   def preferred_table_config
     table_config_users.where(active: true).first

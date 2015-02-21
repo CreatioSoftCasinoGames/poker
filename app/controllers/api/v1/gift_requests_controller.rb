@@ -45,6 +45,7 @@ class Api::V1::GiftRequestsController < Api::V1::ApplicationController
 
 	def set_gift_request
 		@gift_request = GiftRequest.where(id: params[:id]).first
+		(render json: {message: "Gift request not found", success: false}) if @gift_request.blank?
 	end
 
 end

@@ -48,6 +48,7 @@ class Api::V1::FriendRequestsController < Api::V1::ApplicationController
 
 	def get_friend_requests
 		@friend_request = FriendRequest.where(id: params[:id]).first
+		(render join: {message: "Friend request not found!", success: false}) if @friend_request.blank?
 	end
 
 end
