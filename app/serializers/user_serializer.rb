@@ -22,8 +22,8 @@ class UserSerializer < ActiveModel::Serializer
               :xp,
               :level,
               :level_percentage,
-              :shootout_win,
               :sitandgo_win,
+              :shootout_win,
               :num_friend_request,
               :num_gift_request,
               :is_friend,
@@ -31,4 +31,5 @@ class UserSerializer < ActiveModel::Serializer
               :is_facebook_connected,
               :image_url, 
               :new_fb_user
+              :image_url
 end

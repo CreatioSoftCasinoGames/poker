@@ -26,7 +26,7 @@ class GiftRequest < ActiveRecord::Base
 	end
 
 	def image_url
-		reciever.image_url
+		user.image_url
 	end
 
 	private
