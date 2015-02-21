@@ -56,6 +56,8 @@ class Game < ActiveRecord::Base
 				checks: user.bets + user_moves.select {|um| um.action == "check" }.size,
 				all_ins: user.all_ins + user_moves.select {|um| um.action == "allin" }.size,
 				best_hand: best_hand,
+				shootout_played: node_obj['isShootout'] ? (user.shootout_played + 1) : user.shootout_played,
+				sitandgo_played: node_obj['isSitandgo'] ? (user.sitandgo_played + 1) : user.sitandgo_played,
 				shootout_win: (node_obj['shootoutWin'] ? (user.shootout_win + 1) : user.shootout_win),
 				sitandgo_win: (node_obj['sitAndGoWin'] ? (user.sitandgo_win + 1) : user.sitandgo_win),
 				tournament_users_attributes: tournament_users_attributes

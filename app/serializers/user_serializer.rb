@@ -22,11 +22,12 @@ class UserSerializer < ActiveModel::Serializer
               :xp,
               :level,
               :level_percentage,
-              :shootout_win,
-              :sitandgo_win,
+              :sitandgo_percent,
+              :shootout_percent,
               :num_friend_request,
               :num_gift_request,
               :is_friend,
               :is_requested,
               :image_url
+
 end

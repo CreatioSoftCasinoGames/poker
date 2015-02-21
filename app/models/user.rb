@@ -71,6 +71,16 @@ class User < ActiveRecord::Base
     0 if percentage.nan?
   end
 
+  def sitandgo_percent
+    percentage = (sitandgo_win * 100)/sitandgo_played.to_f
+    0 if percentage.nan?
+  end
+
+  def shootout_percent
+    percentage = (shootout_win * 100)/shootout_played.to_f
+    0 if percentage.nan?
+  end
+
   def player_since
     created_at.strftime("%B,%Y")
   end

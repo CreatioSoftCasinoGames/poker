@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150220141612) do
+ActiveRecord::Schema.define(version: 20150221065744) do
 
   create_table "api_keys", force: true do |t|
     t.string   "token"
@@ -260,6 +260,8 @@ ActiveRecord::Schema.define(version: 20150220141612) do
     t.integer  "num_friend_request",                              default: 0
     t.integer  "num_gift_request",                                default: 0
     t.boolean  "online",                                          default: false
+    t.integer  "shootout_played",                                 default: 0
+    t.integer  "sitandgo_played",                                 default: 0
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
