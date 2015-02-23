@@ -6,7 +6,8 @@ class GiftRequest < ActiveRecord::Base
 	validate :search_requested_friend, on: :create
 	validate :send_once, on: :create
 	validate :valid_request, :on => :create
-	before_create :set_coins
+	before_create :debit_chips
+	validate :credit_chips
 	belongs_to :reciever, class_name: "User", foreign_key: "send_to_id"
 
 	def user_login_token
@@ -40,9 +41,19 @@ class GiftRequest < ActiveRecord::Base
 		end
 	end
 
-	def set_coins
+	def debit_chips
 		self.user.chips = user.chips - 1000
 		p user.chips
+	end
+
+	def credit_chips
+		p "credit_chips"
+		if self.changes.include?(:confirmed)
+			send_to_user = User.where(id: send_to_id).first
+			chips = send_to_user.chips + 1000
+			send_to_user.update_attributes(chips: chips)
+			p chips
+		end
 	end
 
 	def valid_request
