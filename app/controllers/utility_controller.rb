@@ -41,6 +41,11 @@ class UtilityController < ApplicationController
 			REDIS_CLIENT.HMSET("economy_range:#{economy_range.id}", "lower_limit", economy_range.lower_limit, "upper_limit", economy_range.upper_limit, "level", economy_range.level)
 		end
 
+		RewardAndLevel.all.each do |reward_level|
+			REDIS_CLIENT.ZADD("reward_level_sorted_set", reward_level.upper_limit, "reward_level:#{reward_level.id}")
+			REDIS_CLIENT.HMSET("reward_level:#{reward_level.id}", "lower_limit", reward_level.lower_limit, "upper_limit", reward_level.upper_limit, "reward", reward_level.reward, "level", reward_level.level)
+		end
+
 		redirect_to root_path, flash: {success: "Data successfully sinked !" }
 	end
 

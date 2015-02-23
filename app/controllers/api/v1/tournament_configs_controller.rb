@@ -15,7 +15,7 @@ class Api::V1::TournamentConfigsController < Api::V1::ApplicationController
 		end
 		leader_board = @tournament_users.as_json({
 			only: [:chips],
-			methods: [:full_name, :image_url, :device_avatar_id]
+			methods: [:full_name, :image_url, :device_avatar_id, :reward, :level]
 		}).each_with_index.map do |player_obj, i|
 			player_obj[:rank] = i + 1
 			player_obj

@@ -1,0 +1,26 @@
+= form_for @reward_and_level, html: { class: "form form-horizontal reward_and_level" } do |f|
+  .form-group
+    = f.label :lower_limit, :class => 'control-label col-lg-2'
+    .col-lg-10
+      = f.text_field :lower_limit, :class => 'form-control'
+    = f.error_span(:lower_limit)
+  .form-group
+    = f.label :upper_limit, :class => 'control-label col-lg-2'
+    .col-lg-10
+      = f.text_field :upper_limit, :class => 'form-control'
+    = f.error_span(:upper_limit)
+  .form-group
+    = f.label :reward, :class => 'control-label col-lg-2'
+    .col-lg-10
+      = f.text_field :reward, :class => 'form-control'
+    = f.error_span(:reward)
+  .form-group
+    = f.label :level, :class => 'control-label col-lg-2'
+    .col-lg-10
+      = f.text_field :level, :class => 'form-control'
+    = f.error_span(:level)
+  .form-group
+    .col-lg-offset-2.col-lg-10
+      = f.submit nil, :class => 'btn btn-primary'
+      '
+      = link_to t('.cancel', :default => t("helpers.links.cancel")), reward_and_levels_path, :class => 'btn'

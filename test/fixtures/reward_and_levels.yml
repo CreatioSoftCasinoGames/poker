@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  lower_limit: 9.99
+  upper_limit: 9.99
+  reward: 9.99
+  level: MyString
+
+two:
+  lower_limit: 9.99
+  upper_limit: 9.99
+  reward: 9.99
+  level: MyString
