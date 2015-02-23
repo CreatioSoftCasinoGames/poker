@@ -30,6 +30,6 @@ class UserSerializer < ActiveModel::Serializer
               :is_requested,
               :is_facebook_connected,
               :image_url, 
-              :new_fb_user
+              :new_fb_user,
               :image_url
 end

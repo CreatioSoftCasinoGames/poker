@@ -71,13 +71,13 @@ class User < ActiveRecord::Base
   end
 
   def sitandgo_percent
-    percentage = (sitandgo_win * 100)/sitandgo_played.to_f
-    percentage.nan? ? 0 : percentage
+    percentage = (sitandgo_win * 100)/sitandgo_played.to_f 
+    sitandgo_played != 0 ? percentage : 0
   end
 
   def shootout_percent
     percentage = (shootout_win * 100)/shootout_played.to_f
-    percentage.nan? ? 0 : percentage
+    shootout_played != 0 ? percentage : 0
   end
 
   def player_since
@@ -90,13 +90,9 @@ class User < ActiveRecord::Base
   
   def image_url 
     if fb_id
-      "http://graph.facebook.com/#{fb_id}/picture"
+      "http://graph.facebook.com/#{fb_id}/picture?height=200"
     end
   end
-
-  # def device_avatar_id
-  #   user.device_avatar_id
-  # end
 
   def preferred_table_config
     table_config_users.where(active: true).first
