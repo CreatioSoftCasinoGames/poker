@@ -67,7 +67,7 @@ class GiftRequest < ActiveRecord::Base
 		if gift_sent.present?
 			time_remaining = gift_sent.created_at - Time.now + 24.hours
 			if time_remaining > 0 || gift_sent.gift_chips > 1000
-				self.errors.add(:base, "You can send gift only once in 24 hours or gift amount should be than 1k.")
+				self.errors.add(:base, "Not sent")
 			end
 		end
 	end

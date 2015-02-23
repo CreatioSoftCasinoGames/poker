@@ -7,7 +7,9 @@ class Api::V1::GiftRequestsController < Api::V1::ApplicationController
 		@user = User.fetch_by_login_token(params[:login_token])
 		@gift_request = @user.gift_requests_sent.build(send_token: params[:send_to_token], gift_chips: params[:gift_chips], is_requested: params[:is_asked])
 		if @gift_request.save
-			render json: @gift_request
+			render json: {
+				success: true
+			}
 		else
 			render json: {
 				success: false,
