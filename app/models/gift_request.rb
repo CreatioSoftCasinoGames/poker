@@ -53,7 +53,7 @@ class GiftRequest < ActiveRecord::Base
 	def send_once
 		gift_sent = GiftRequest.where(user_id: user_id, send_to_id: send_to_id).last
 		time_remaining = gift_sent.created_at - Time.now + 24.hours
-		if time_remaining >= 0 || gift_sent.chips >= 50000
+		if time_remaining >= 0
 			self.errors.add(:base, "You can not send gift.")
 		end
 	end
