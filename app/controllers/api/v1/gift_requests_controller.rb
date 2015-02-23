@@ -10,6 +10,7 @@ class Api::V1::GiftRequestsController < Api::V1::ApplicationController
 			render json: @gift_request
 		else
 			render json: {
+				success: false,
 				errors: @gift_request.errors.full_messages.join(", ")
 			}
 		end
@@ -32,7 +33,7 @@ class Api::V1::GiftRequestsController < Api::V1::ApplicationController
 	def destroy
 		@gift_request.destroy
 		render json: {
-			message: "Gift successfully deleted!"
+			success: true
 		}
 	end
 

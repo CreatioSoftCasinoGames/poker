@@ -41,7 +41,8 @@ class GiftRequest < ActiveRecord::Base
 	end
 
 	def set_coins
-		self.user.chips = user.chips.to_f - 1000
+		self.user.chips = user.chips - 1000
+		p user.chips
 	end
 
 	def valid_request
@@ -52,9 +53,11 @@ class GiftRequest < ActiveRecord::Base
 
 	def send_once
 		gift_sent = GiftRequest.where(user_id: user_id, send_to_id: send_to_id).last
-		time_remaining = gift_sent.created_at - Time.now + 24.hours
-		if time_remaining > 0 || gift_sent.gift_chips > 1000
-			self.errors.add(:base, "You can send gift only once in 24 hours or gift amount should be than 1k.")
+		if gift_sent.present?
+			time_remaining = gift_sent.created_at - Time.now + 24.hours
+			if time_remaining > 0 || gift_sent.gift_chips > 1000
+				self.errors.add(:base, "You can send gift only once in 24 hours or gift amount should be than 1k.")
+			end
 		end
 	end
 
