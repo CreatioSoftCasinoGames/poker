@@ -6,10 +6,9 @@ class Api::V1::SessionsController < Api::V1::ApplicationController
 				@guest_user = User.where(device_id: params[:device_id], is_facebook_connected: false).first
 				if @guest_user.present?
 					@user = @guest_user.dup
-					@user.attributes = {device_id: nil, is_guest: nil, fb_id: params[:fb_id], email: "fb"+SecureRandom.hex(5)+"@pkrapi.com"}
+					@user.attributes = {parent_id: @guest_user.id, device_id: nil, is_guest: nil, fb_id: params[:fb_id], email: params[:fb_id]+"@facebook.com"}
 					if @user.save
 						@guest_user.update_attributes(is_facebook_connected: true)
-						p @guest_user
 						@success = true
 						@new_user = true
 					else
@@ -17,16 +16,19 @@ class Api::V1::SessionsController < Api::V1::ApplicationController
 						@messages = @user.errors.full_messages.join(", ")
 					end
 				else
+					@success = false
 					@messages = "Guest user not present!"
 				end
 			else
-				@messages = "Allready connected with facebook!"
+				# @messages = "Allready connected with facebook!"
+				@user = User.where(fb_id: params[:fb_id]).first
 			end
 		else
 			if params[:fb_id]
 				@user = User.where(fb_id: params[:fb_id]).first_or_initialize
 				if @user.new_record?
-					@user.attributes = {email: params[:email], first_name: params[:first_name], last_name: params[:last_name], fb_friend_list: params[:fb_friend_list]}
+					email = params[:email].present? ? params[:email] : params[:fb_id]+"@facebook.com"
+					@user.attributes = {email: email, first_name: params[:first_name], last_name: params[:last_name], fb_friend_list: params[:fb_friend_list]}
 					if @user.save
 						@success = true
 						@new_user = true
@@ -61,7 +63,7 @@ class Api::V1::SessionsController < Api::V1::ApplicationController
 				@user.new_fb_user = @new_user
 				render json: @user
 			else
-				render json: @user.errors.full_messages.join(", ")
+				render json: @messages
 			end
 		else
 			render json: @messages

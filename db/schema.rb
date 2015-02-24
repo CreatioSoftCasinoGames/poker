@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150223115246) do
+ActiveRecord::Schema.define(version: 20150224093344) do
 
   create_table "api_keys", force: true do |t|
     t.string   "token"
@@ -97,11 +97,11 @@ ActiveRecord::Schema.define(version: 20150223115246) do
   create_table "gift_requests", force: true do |t|
     t.integer  "user_id"
     t.integer  "send_to_id"
-    t.boolean  "confirmed",                             default: false
-    t.boolean  "is_requested",                          default: false
+    t.boolean  "confirmed",    default: false
+    t.boolean  "is_requested", default: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.decimal  "gift_chips",   precision: 10, scale: 0, default: 1000
+    t.string   "gift_type"
   end
 
   create_table "in_game_gifts", force: true do |t|
@@ -272,6 +272,7 @@ ActiveRecord::Schema.define(version: 20150223115246) do
     t.boolean  "is_facebook_connected",                           default: false
     t.integer  "shootout_played",                                 default: 0
     t.integer  "sitandgo_played",                                 default: 0
+    t.integer  "parent_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

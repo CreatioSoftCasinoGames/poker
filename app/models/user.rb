@@ -31,7 +31,7 @@ class User < ActiveRecord::Base
 
   before_create :set_joining_bonus
   before_validation :set_fb_login_details, :set_guest_login_details, :set_fb_friend
-
+  after_create :set_chips_for_fb_user, :set_chips_for_synced_user
   def self.fetch_by_login_token(login_token)
     if login_token
       self.where(login_token: login_token).first || LoginHistory.where(login_token: login_token).first.user
@@ -144,6 +144,20 @@ class User < ActiveRecord::Base
         Friendship.create(user_id: self.id, friend_id: friend_id)
         Friendship.create(user_id: friend_id, friend_id: self.id)
       end
+    end
+  end
+
+  def set_chips_for_fb_user
+    if fb_id && !self.parent_id.present?
+      chips = self.chips + 10000
+      self.update_attributes(chips: chips)
+    end
+  end
+
+  def set_chips_for_synced_user
+    if self.parent_id.present?
+      chips = User.where(id: parent_id).first.chips + 10000
+      self.update_attributes(chips: chips)
     end
   end
 
