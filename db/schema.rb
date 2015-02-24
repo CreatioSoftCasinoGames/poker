@@ -258,9 +258,9 @@ ActiveRecord::Schema.define(version: 20150224093344) do
     t.decimal  "total_turns",            precision: 10, scale: 0, default: 0
     t.decimal  "all_ins",                precision: 10, scale: 0, default: 0
     t.decimal  "calls",                  precision: 10, scale: 0, default: 0
+    t.integer  "shootout_level",                                  default: 1
     t.string   "login_token"
     t.string   "device_id"
-    t.integer  "shootout_level",                                  default: 1
     t.integer  "level",                                           default: 1
     t.decimal  "level_percentage",       precision: 10, scale: 0, default: 0
     t.integer  "shootout_win",                                    default: 0
@@ -269,9 +269,9 @@ ActiveRecord::Schema.define(version: 20150224093344) do
     t.integer  "num_friend_request",                              default: 0
     t.integer  "num_gift_request",                                default: 0
     t.boolean  "online",                                          default: false
-    t.boolean  "is_facebook_connected",                           default: false
     t.integer  "shootout_played",                                 default: 0
     t.integer  "sitandgo_played",                                 default: 0
+    t.boolean  "is_facebook_connected",                           default: false
     t.integer  "parent_id"
   end
 

@@ -64,7 +64,7 @@ class GiftRequest < ActiveRecord::Base
 		gift_sent = GiftRequest.where(user_id: user_id, send_to_id: send_to_id).last
 		p gift_sent
 		if gift_sent.present?
-			if gift_sent.created_at.to_date == Time.now.to_date || gift_sent.gift_chips.to_f > 1000
+			if gift_sent.created_at.to_date == Time.now.to_date
 				self.errors.add(:base, "Not sent")
 			end
 		end
