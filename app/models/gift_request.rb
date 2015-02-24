@@ -6,6 +6,7 @@ class GiftRequest < ActiveRecord::Base
 	validate :search_requested_friend, on: :create
 	validate :send_once, on: :create
 	validate :valid_request, :on => :create
+	validate :validate_max_send, :on => :create
 	before_create :debit_chips
 	validate :credit_chips
 	belongs_to :reciever, class_name: "User", foreign_key: "send_to_id"
@@ -43,16 +44,13 @@ class GiftRequest < ActiveRecord::Base
 
 	def debit_chips
 		self.user.chips = user.chips - 1000
-		p user.chips
 	end
 
 	def credit_chips
-		p "credit_chips"
 		if self.changes.include?(:confirmed)
 			send_to_user = User.where(id: send_to_id).first
 			chips = send_to_user.chips + 1000
 			send_to_user.update_attributes(chips: chips)
-			p chips
 		end
 	end
 
@@ -64,11 +62,20 @@ class GiftRequest < ActiveRecord::Base
 
 	def send_once
 		gift_sent = GiftRequest.where(user_id: user_id, send_to_id: send_to_id).last
+		p gift_sent
 		if gift_sent.present?
-			time_remaining = gift_sent.created_at - Time.now + 24.hours
-			if time_remaining > 0 || gift_sent.gift_chips > 1000
+			if gift_sent.created_at.to_date == Time.now.to_date || gift_sent.gift_chips.to_f > 1000
 				self.errors.add(:base, "Not sent")
 			end
+		end
+	end
+
+	def validate_max_send
+		p "validate Max"
+		at_begin = Time.now.beginning_of_day
+		at_end = at_begin + 1.day
+		if user.gift_requests_sent.where("created_at >= ? and created_at <= ?", at_begin, at_end).count() >= 50
+			self.errors.add(:base, "Limit reached!")
 		end
 	end
 
