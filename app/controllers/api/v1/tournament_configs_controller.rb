@@ -9,9 +9,11 @@ class Api::V1::TournamentConfigsController < Api::V1::ApplicationController
 			friend_ids = Friendship.where(user_id: @user.id, friend_id: tournament_user_ids).pluck(:friend_id) + [@user.id]
 			@tournament_users = @active_tournament_users.where(user_id: friend_ids).order("chips desc").limit(100)
 			my_rank = @active_tournament_users.where(user_id: friend_ids).order('chips DESC').map(&:user_id).index(@user.id).to_f + 1
+			my_chips = @active_tournament_users.where(user_id: @user.id).first.chips
 		else
 			@tournament_users = @tournament_config.tournaments.active.first.tournament_users.order("chips desc").limit(300)
 			my_rank = @tournament_config.tournaments.active.first.tournament_users.order('chips DESC').map(&:user_id).index(@user.id).to_f + 1
+			my_chips = @tournament_users.where(user_id: @user.id).first.chips
 		end
 		leader_board = @tournament_users.as_json({
 			only: [:chips],
@@ -22,7 +24,9 @@ class Api::V1::TournamentConfigsController < Api::V1::ApplicationController
 		end
 		render json: {
 			leader_board: leader_board,
-			my_rank: my_rank
+			my_rank: my_rank,
+			my_chips: my_chips,
+			remaining_time: @tournament_config.tournaments.active.first.created_at - Time.now + 24.hours
 		}
 	end
 
