@@ -95,28 +95,4 @@ class Api::V1::SessionsController < Api::V1::ApplicationController
 		end
 	end
 
-	# def connect_facebook
-	# 	@user = User.where(login_token: params[:id]).first
-	# 	if @user.is_guest? && !@user.is_facebook_connected?
-	# 		@new_user = @user.dup
-	# 		# @new_user.attributes = {device_id: nil, is_guest: nil, fb_id: params[:fb_id], login_token: SecureRandom.hex(5)}
-	# 		if @new_user.save
-	# 			@user.update_attributes(is_facebook_connected: true)
-	# 			@new_user.update_attributes(device_id: nil, is_guest: nil, fb_id: params[:fb_id], login_token: SecureRandom.hex(5))
-	# 			render json: {
-	# 				message: "Successfully synced!",
-	# 				user: @new_user
-	# 			}
-	# 		else
-	# 			render json: {
-	# 				message: "Problem in sync may be you have allready synced!"
-	# 			}
-	# 		end
-	# 	else
-	# 		render json: {
-	# 			message: "Only guest user can synced with facebook!"
-	# 		}
-	# 	end
-	# end
-
 end
