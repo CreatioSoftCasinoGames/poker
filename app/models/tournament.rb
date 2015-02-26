@@ -9,8 +9,12 @@ class Tournament < ActiveRecord::Base
 
 	def update_config
 		if self.changes.include?(:active) && !active
-			self.tournament_config.is_running = false
+			if self.tournament_config.period
+				@start_date = self.tournament_config.start_date + self.tournament_config.days
+			end
+			self.tournament_config.update_attributes(is_running: false, start_date: @start_date)
 		end
+		true
 	end
 
 end

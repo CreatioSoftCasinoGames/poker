@@ -28,6 +28,7 @@ class Game < ActiveRecord::Base
 			})
 			best_hand_rank = (node_obj['handRank'].to_f > user.best_hand_rank.to_f) ? node_obj['handRank'] : user.best_hand_rank
 			best_hand = (node_obj['handRank'].to_f > user.best_hand_rank.to_f) ? node_obj['handMessage'] : user.best_hand
+			best_hand_cards = (node_obj['handRank'].to_f > user.best_hand_rank.to_f) ? node_obj['handCards'] : user.best_hand_cards
 			user_moves = game_moves.select {|gm| gm.user_id == user.id }
 			Tournament.active.each do |tournament|
 				tournament_user = TournamentUser.where(tournament_id: tournament.id, user_id: user.id).first
@@ -53,9 +54,10 @@ class Game < ActiveRecord::Base
 				folds: user.folds + user_moves.select {|um| um.action == "fold" }.size,
 				raises: user.raises + user_moves.select {|um| um.action == "raise" }.size,
 				bets: user.bets + user_moves.select {|um| um.action == "bet" }.size,
-				checks: user.bets + user_moves.select {|um| um.action == "check" }.size,
+				checks: user.checks + user_moves.select {|um| um.action == "check" }.size,
 				all_ins: user.all_ins + user_moves.select {|um| um.action == "allin" }.size,
 				best_hand: best_hand,
+				best_hand_cards: best_hand_cards,
 				shootout_played: node_obj['isShootout'] ? (user.shootout_played + 1) : user.shootout_played,
 				sitandgo_played: node_obj['isSitandgo'] ? (user.sitandgo_played + 1) : user.sitandgo_played,
 				shootout_win: (node_obj['shootoutWin'] ? (user.shootout_win + 1) : user.shootout_win),
