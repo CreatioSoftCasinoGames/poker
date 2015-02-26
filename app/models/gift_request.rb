@@ -7,6 +7,7 @@ class GiftRequest < ActiveRecord::Base
 	validate :send_once, on: :create
 	validate :valid_request, :on => :create
 	validate :validate_max_send, :on => :create
+	validate :validate_max_receive, :on => :create
 	before_create :debit_chips
 	validate :credit_chips
 	belongs_to :reciever, class_name: "User", foreign_key: "send_to_id"
@@ -74,6 +75,14 @@ class GiftRequest < ActiveRecord::Base
 		at_end = at_begin + 1.day
 		if user.gift_requests_sent.where("created_at >= ? and created_at <= ?", at_begin, at_end).count() >= 50
 			self.errors.add(:base, "Limit reached!")
+		end
+	end
+
+	def validate_max_receive
+		at_begin = Time.now.beginning_of_day
+		at_end = at_begin + 1.day
+		if reciever.gift_requests.where("created_at >= ? and created_at <= ?", at_begin, at_end).count >= 50
+			self.errors.add(:base, "Can't send!")
 		end
 	end
 
