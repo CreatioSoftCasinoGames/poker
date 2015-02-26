@@ -35,7 +35,7 @@ class Game < ActiveRecord::Base
 	        id: tournament_user.try(:id),
 	        user_id: user.id,
 	        tournament_id: tournament.id,
-	        chips: tournament_user.try(:chips).to_f - game_user.round_chips + node_obj['remainingChips']
+	        chips: node_obj['remainingChips'] > game_user.round_chips ? (tournament_user.try(:chips).to_f - game_user.round_chips + node_obj['remainingChips']) : tournament_user.try(:chips).to_f
 	      })
 			end
 			users_attributes.push({
