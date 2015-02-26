@@ -39,12 +39,17 @@ class GiftRequest < ActiveRecord::Base
 		unless send_to.blank?
 			self.send_to_id = send_to.id
 		else
-			self.errors.add(:base, "Requested User not present")
+			self.errors.add(:base, "1")
 		end
 	end
 
 	def debit_chips
-		self.user.chips = user.chips - 1000
+		if user.chips > 1000
+			chips = user.chips - 1000
+			self.user.update_attributes(chips: chips)
+		else
+			self.errors.add(:base, "3")
+		end
 	end
 
 	def credit_chips
@@ -57,7 +62,7 @@ class GiftRequest < ActiveRecord::Base
 
 	def valid_request
 		if Friendship.where(user_id: user_id, friend_id: send_to_id).blank?
-			self.errors.add(:base, "Requested user is not your friend! You can send gift only to your friend.")
+			self.errors.add(:base, "2")
 		end
 	end
 
@@ -65,7 +70,7 @@ class GiftRequest < ActiveRecord::Base
 		gift_sent = GiftRequest.where(user_id: user_id, send_to_id: send_to_id).last
 		if gift_sent.present?
 			if gift_sent.created_at.to_date == Time.now.to_date
-				self.errors.add(:base, "Not sent")
+				self.errors.add(:base, "4")
 			end
 		end
 	end
@@ -74,7 +79,7 @@ class GiftRequest < ActiveRecord::Base
 		at_begin = Time.now.beginning_of_day
 		at_end = at_begin + 1.day
 		if user.gift_requests_sent.where("created_at >= ? and created_at <= ?", at_begin, at_end).count() >= 50
-			self.errors.add(:base, "Limit reached!")
+			self.errors.add(:base, "5")
 		end
 	end
 
@@ -82,7 +87,7 @@ class GiftRequest < ActiveRecord::Base
 		at_begin = Time.now.beginning_of_day
 		at_end = at_begin + 1.day
 		if reciever.gift_requests.where("created_at >= ? and created_at <= ?", at_begin, at_end).count >= 50
-			self.errors.add(:base, "Can't send!")
+			self.errors.add(:base, "6")
 		end
 	end
 
