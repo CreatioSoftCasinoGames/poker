@@ -62,7 +62,6 @@ class Api::V1::UsersController < Api::V1::ApplicationController
 	def delete_friend
 		@friend = Friendship.where(user_id: @user.id, friend_id: User.fetch_by_login_token(params[:friend_token])).first.delete
 		@friend1 = Friendship.where(user_id: User.fetch_by_login_token(params[:friend_token]), friend_id: @user.id).first.delete
-		FriendRequest.where(user_id: [@user.id, User.fetch_by_login_token(params[:friend_token])], requested_to_id: [@user.id, User.fetch_by_login_token(params[:friend_token])]).first.update_attributes(confirmed: false)
 		render json: {
 			success: true
 		}
