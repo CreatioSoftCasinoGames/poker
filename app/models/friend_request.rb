@@ -9,9 +9,10 @@ class FriendRequest < ActiveRecord::Base
 	attr_accessor :requested_token
 
 	def update_friend
-		if confirmed
+		if self.changes.include?(:confirmed)
 			Friendship.create(user_id: self.user_id, friend_id: self.requested_to_id)
 			Friendship.create(friend_id: self.user_id, user_id: self.requested_to_id)
+			FriendRequest.where(user_id: [self.user_id, self.requested_to_id], requested_to_id: [self.user_id, self.requested_to_id]).first.delete
 		end
 	end
 
