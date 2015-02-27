@@ -1,6 +1,6 @@
 class Api::V1::UsersController < Api::V1::ApplicationController
 
-	before_action :find_user, only: [:show, :update, :my_friends, :my_friend_requests, :friend_request_sent, :send_in_game_gift, :gift_sent, :gift_received, :asked_for_gift_to, :asked_for_gift_by, :my_gifts]
+	before_action :find_user, only: [:show, :update, :my_friends, :my_friend_requests, :friend_request_sent, :send_in_game_gift, :gift_sent, :gift_received, :asked_for_gift_to, :asked_for_gift_by, :my_gifts, :delete_friend]
 
 	def create
 		params[:password] = "temp1234" if params[:password].blank?
@@ -57,6 +57,14 @@ class Api::V1::UsersController < Api::V1::ApplicationController
 			only: [:login_token, :online, :device_avatar_id],
 			methods: [:full_name, :image_url]
 		})
+	end
+
+	def delete_friend
+		@friend = Friendship.where(user_id: @user.id, friend_id: User.fetch_by_login_token(params[:friend_token])).first.delete
+		@friend1 = Friendship.where(user_id: User.fetch_by_login_token(params[:friend_token]), friend_id: @user.id).first.delete
+		render json: {
+			success: true
+		}
 	end
 
 	def gift_sent
