@@ -1,6 +1,14 @@
 require 'sidekiq/web'
 Rails.application.routes.draw do
 
+  resources :reward_and_levels
+
+  resources :tournament_configs
+
+  resources :in_game_gifts
+
+  resources :login_histories
+
   resources :economy_ranges
 
   resources :economy_bets
@@ -33,6 +41,7 @@ Rails.application.routes.draw do
       resources :users
       resources :games
       resources :friend_requests
+      resources :gift_requests
       resources :tables do
         get :assign, on: :collection
       end
@@ -41,11 +50,27 @@ Rails.application.routes.draw do
           get :friend_request_sent
           get :my_friend_requests
           get :my_friends
+          delete :delete_friend
+          get :send_in_game_gift
+          get :gift_sent
+          get :gift_received
+          get :asked_for_gift_to
+          get :asked_for_gift_by
         end
       end
       resources :sessions, only: [:create, :destroy]
+      resources :sessions do
+        member do
+          put :connect_facebook
+        end
+      end
       resources :table_config_users, only: [:create]
       get "table_configs/:game_type/tables" => "table_configs#get_game_type"
+      resources :tournament_configs do
+        member do
+          get :leader_board
+        end
+      end
     end
   end
 

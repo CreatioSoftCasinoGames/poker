@@ -1,0 +1,16 @@
+= form_for @in_game_gift, html: { class: "form form-horizontal in_game_gift" } do |f|
+  .form-group
+    = f.label :name, :class => 'control-label col-lg-2'
+    .col-lg-10
+      = f.text_field :name, :class => 'form-control'
+    = f.error_span(:name)
+  .form-group
+    = f.label :cost, :class => 'control-label col-lg-2'
+    .col-lg-10
+      = f.text_field :cost, :class => 'form-control'
+    = f.error_span(:cost)
+  .form-group
+    .col-lg-offset-2.col-lg-10
+      = f.submit nil, :class => 'btn btn-primary'
+      '
+      = link_to t('.cancel', :default => t("helpers.links.cancel")), in_game_gifts_path, :class => 'btn'

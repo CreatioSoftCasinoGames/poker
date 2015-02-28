@@ -3,26 +3,16 @@ class Api::V1::FriendRequestsController < Api::V1::ApplicationController
 	#skip_before_filter :authenticate_user
 
 	before_action :get_friend_requests, only: [:show, :destroy, :update]
+
 	def create
-		@user = User.where(login_token: params[:login_token]).first
-		user_id = @user.id
-		@requested_friend = User.where(login_token: params[:requested_token]).first
-		requested_to_id = @requested_friend.id
-		if @requested_friend.present?
-			@friend_request = FriendRequest.new(user_id: user_id, requested_to_id: requested_to_id)
-			if @friend_request.save
-				render json: @friend_request
-			else
-				render json: {
-					errors: @friend_request.errors.full_messages.join(", ")
-				}
-			end
+		@friend_request = current_user.friend_requests_sent.build(requested_token: params[:requested_token])
+		if @friend_request.save
+			render json: @friend_request
 		else
 			render json: {
-				message: "Requested Friend not found"
+				errors: @friend_request.errors.full_messages.join(", ")
 			}
 		end
-
 	end
 
 	def update
@@ -38,7 +28,7 @@ class Api::V1::FriendRequestsController < Api::V1::ApplicationController
 	def destroy
 		@friend_request.destroy
 		render json:{
-			message: "Request deleted!"
+			success: true
 		}
 	end
 
@@ -48,12 +38,17 @@ class Api::V1::FriendRequestsController < Api::V1::ApplicationController
 
 	private
 
+	def current_user
+		User.find_by_login_token(params[:login_token])
+	end
+
 	def friend_request_params
-		params.require(:friend_request).permit(:confirm)
+		params.require(:friend_request).permit(:confirmed)
 	end
 
 	def get_friend_requests
 		@friend_request = FriendRequest.where(id: params[:id]).first
+		(render join: {message: "Friend request not found!", success: false}) if @friend_request.blank?
 	end
 
 end

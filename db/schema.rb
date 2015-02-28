@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150204190141) do
+ActiveRecord::Schema.define(version: 20150224093344) do
 
   create_table "api_keys", force: true do |t|
     t.string   "token"
@@ -58,7 +58,7 @@ ActiveRecord::Schema.define(version: 20150204190141) do
   create_table "friend_requests", force: true do |t|
     t.integer "user_id"
     t.integer "requested_to_id"
-    t.boolean "confirm",         default: false
+    t.boolean "confirmed",       default: false
   end
 
   create_table "friendships", force: true do |t|
@@ -94,6 +94,31 @@ ActiveRecord::Schema.define(version: 20150204190141) do
     t.string   "uuid"
   end
 
+  create_table "gift_requests", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "send_to_id"
+    t.boolean  "confirmed",    default: false
+    t.boolean  "is_requested", default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "gift_type"
+  end
+
+  create_table "in_game_gifts", force: true do |t|
+    t.string   "name"
+    t.decimal  "cost",       precision: 10, scale: 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "login_histories", force: true do |t|
+    t.boolean  "active"
+    t.integer  "user_id"
+    t.string   "login_token"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "moves", force: true do |t|
     t.string   "action"
     t.integer  "user_id"
@@ -107,6 +132,15 @@ ActiveRecord::Schema.define(version: 20150204190141) do
     t.string   "round_max_bet"
     t.decimal  "pot",             precision: 10, scale: 0
     t.integer  "next_user_id"
+  end
+
+  create_table "reward_and_levels", force: true do |t|
+    t.decimal  "lower_limit", precision: 10, scale: 0
+    t.decimal  "upper_limit", precision: 10, scale: 0
+    t.decimal  "reward",      precision: 10, scale: 0
+    t.string   "level"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "rooms", force: true do |t|
@@ -158,6 +192,34 @@ ActiveRecord::Schema.define(version: 20150204190141) do
     t.datetime "updated_at"
   end
 
+  create_table "tournament_configs", force: true do |t|
+    t.date     "start_date"
+    t.date     "end_date"
+    t.boolean  "period"
+    t.decimal  "days",       precision: 10, scale: 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "is_running",                          default: false
+  end
+
+  create_table "tournament_users", force: true do |t|
+    t.integer  "tournament_id"
+    t.integer  "user_id"
+    t.decimal  "chips",         precision: 10, scale: 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "rank",                                   default: 0
+  end
+
+  create_table "tournaments", force: true do |t|
+    t.integer  "tournament_config_id"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.boolean  "active"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "users", force: true do |t|
     t.string   "email",                                           default: "",       null: false
     t.string   "encrypted_password",                              default: "",       null: false
@@ -201,6 +263,16 @@ ActiveRecord::Schema.define(version: 20150204190141) do
     t.string   "device_id"
     t.integer  "level",                                           default: 1
     t.decimal  "level_percentage",       precision: 10, scale: 0, default: 0
+    t.integer  "shootout_win",                                    default: 0
+    t.integer  "sitandgo_win",                                    default: 0
+    t.text     "best_hand_cards"
+    t.integer  "num_friend_request",                              default: 0
+    t.integer  "num_gift_request",                                default: 0
+    t.boolean  "online",                                          default: false
+    t.integer  "shootout_played",                                 default: 0
+    t.integer  "sitandgo_played",                                 default: 0
+    t.boolean  "is_facebook_connected",                           default: false
+    t.integer  "parent_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
