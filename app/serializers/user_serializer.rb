@@ -13,7 +13,7 @@ class UserSerializer < ActiveModel::Serializer
               :best_hand_cards,
   						:hands_played,
   						:hands_won,
-  						:folds_percent,
+              :folds_percent,
   						:checks_percent,
               :calls_percent,
   						:bets_percent,
