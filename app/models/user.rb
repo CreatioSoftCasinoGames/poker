@@ -13,14 +13,14 @@ class User < ActiveRecord::Base
   has_many :games, through: :game_users
   has_many :friend_requests, :dependent => :destroy, foreign_key: "requested_to_id"
   has_many :friend_requests_sent, :dependent => :destroy, foreign_key: "user_id", class_name: "FriendRequest"
-
+  has_many :unconfirmed_friend_requests, -> { where(confirmed: false) }, class_name: "FriendRequest", foreign_key: "requested_to_id"
   has_many :friendships, :dependent => :destroy
   has_many :friends, through: :friendships
   has_many :gift_requests, :dependent => :destroy, foreign_key: "send_to_id"
   has_many :gift_requests_sent, :dependent => :destroy, foreign_key: "user_id", class_name: "GiftRequest"
   has_many :login_histories, :dependent => :destroy
   has_many :unconfirmed_gift_requests, -> { where(confirmed: false) }, class_name: "GiftRequest", foreign_key: "send_to_id"
-  attr_accessor :fb_friend_list, :is_friend, :is_requested, :new_fb_user
+  attr_accessor :fb_friends_list, :is_friend, :is_requested, :new_fb_user
   accepts_nested_attributes_for :tournament_users
   has_attached_file :image,
     Poker::Configuration.paperclip_options[:users][:image]
@@ -30,7 +30,7 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :login_histories
 
   before_create :set_joining_bonus
-  before_validation :set_fb_login_details, :set_guest_login_details, :set_fb_friend
+  before_validation :set_fb_login_details, :set_guest_login_details, :set_fb_friends
   after_create :set_chips_for_fb_user, :set_chips_for_synced_user
   def self.fetch_by_login_token(login_token)
     if login_token
@@ -135,14 +135,19 @@ class User < ActiveRecord::Base
     end
   end
 
-  def set_fb_friend
-    if fb_friend_list
-      user_ids = User.where(fb_id: fb_friend_list).collect(&:id)
+  def set_fb_friends
+    if fb_friends_list
+      user_ids = User.where(fb_id: fb_friends_list).collect(&:id)
       friend_ids = self.friends.collect(&:id)
       new_friend_ids = user_ids - friend_ids
+      deleted_friends_ids = friend_ids - user_ids
       new_friend_ids.each do |friend_id|
         Friendship.create(user_id: self.id, friend_id: friend_id)
         Friendship.create(user_id: friend_id, friend_id: self.id)
+      end
+      deleted_friends_ids.each do |deleted_friend_id|
+        Friendship.where(user_id: self.id, friend_id: deleted_friend_id).first.delete
+        Friendship.where(user_id: deleted_friend_id, friend_id: self.id).first.delete
       end
     end
   end

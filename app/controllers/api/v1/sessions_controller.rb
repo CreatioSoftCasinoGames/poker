@@ -20,7 +20,6 @@ class Api::V1::SessionsController < Api::V1::ApplicationController
 					@messages = "Guest user not present!"
 				end
 			else
-				# @messages = "Allready connected with facebook!"
 				@user = User.where(fb_id: params[:fb_id]).first
 				@user.attributes = {fb_friend_list: params[:fb_friend_list]}
 			end
@@ -65,10 +64,16 @@ class Api::V1::SessionsController < Api::V1::ApplicationController
 				@user.new_fb_user = @new_user
 				render json: @user
 			else
-				render json: @messages
+				render json: {
+					errors: @messages,
+					success: false
+				}
 			end
 		else
-			render json: @messages
+			render json: {
+				errors: @messages,
+				success: false
+			}
 		end
 	end
 
@@ -85,7 +90,8 @@ class Api::V1::SessionsController < Api::V1::ApplicationController
 				}
 			else
 				render json: {
-					error: @user.errors.full_messages.join(", ")
+					error: @user.errors.full_messages.join(", "),
+					success: false
 				}
 			end
 		else
