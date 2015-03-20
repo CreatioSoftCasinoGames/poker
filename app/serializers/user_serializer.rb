@@ -31,5 +31,6 @@ class UserSerializer < ActiveModel::Serializer
               :is_facebook_connected,
               :image_url, 
               :new_fb_user,
-              :image_url
+              :image_url,
+              :previous_login_token
 end

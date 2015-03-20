@@ -20,7 +20,9 @@ class User < ActiveRecord::Base
   has_many :gift_requests_sent, :dependent => :destroy, foreign_key: "user_id", class_name: "GiftRequest"
   has_many :login_histories, :dependent => :destroy
   has_many :unconfirmed_gift_requests, -> { where(confirmed: false) }, class_name: "GiftRequest", foreign_key: "send_to_id"
-  attr_accessor :fb_friend_list, :is_friend, :is_requested, :new_fb_user
+  has_many :login_histories
+
+  attr_accessor :fb_friend_list, :is_friend, :is_requested, :new_fb_user, :previous_login_token
   accepts_nested_attributes_for :tournament_users
   has_attached_file :image,
     Poker::Configuration.paperclip_options[:users][:image]
@@ -32,6 +34,7 @@ class User < ActiveRecord::Base
   before_create :set_joining_bonus
   before_validation :set_fb_login_details, :set_guest_login_details, :set_fb_friend
   after_create :set_chips_for_fb_user, :set_chips_for_synced_user
+
   def self.fetch_by_login_token(login_token)
     if login_token
       self.where(login_token: login_token).first || LoginHistory.where(login_token: login_token).first.user

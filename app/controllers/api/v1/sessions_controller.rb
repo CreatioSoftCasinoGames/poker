@@ -63,6 +63,7 @@ class Api::V1::SessionsController < Api::V1::ApplicationController
 			login_token = SecureRandom.hex(5)
 			if @user.update_attributes(login_token: login_token, online: true, login_histories_attributes: {id: nil, active: true, login_token: login_token })
 				@user.new_fb_user = @new_user
+				@user.previous_login_token = @user.login_histories.order("created_at desc").limit(2).last.try(:login_token)
 				render json: @user
 			else
 				render json: @messages
