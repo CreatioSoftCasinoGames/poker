@@ -21,7 +21,7 @@ class User < ActiveRecord::Base
   has_many :login_histories, :dependent => :destroy
   has_many :unconfirmed_gift_requests, -> { where(confirmed: false) }, class_name: "GiftRequest", foreign_key: "send_to_id"
   has_many :login_histories
-  attr_accessor :fb_friend_list, :is_friend, :is_requested, :new_fb_user, :previous_login_token
+  attr_accessor :fb_friends_list, :is_friend, :is_requested, :new_fb_user, :previous_login_token
   accepts_nested_attributes_for :tournament_users
   has_attached_file :image,
     Poker::Configuration.paperclip_options[:users][:image]
