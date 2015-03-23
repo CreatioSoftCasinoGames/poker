@@ -37,19 +37,15 @@ class Api::V1::UsersController < Api::V1::ApplicationController
 	end
 
 	def friend_request_sent
-		@friend_requests = @user.friend_requests.where(confirmed: false)
-		render json: @friend_requests
+		render json: @user.friend_requests_sent.where(confirmed: false)
 	end
 
 	def my_friend_requests
-		user_id = @user.id
-		@friend_requests = FriendRequest.where(requested_to_id: user_id, confirmed: false)
-		render json: @friend_requests
+		render json: @user.unconfirmed_friend_requests.where(confirmed: false)
 	end
 
 	def send_in_game_gift
-		@in_game_gifts = InGameGift.all
-		render json: @in_game_gifts
+		render json: InGameGift.all
 	end
 
 	def my_friends

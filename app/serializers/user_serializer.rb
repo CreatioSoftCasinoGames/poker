@@ -13,7 +13,7 @@ class UserSerializer < ActiveModel::Serializer
               :best_hand_cards,
   						:hands_played,
   						:hands_won,
-  						:folds_percent,
+              :folds_percent,
   						:checks_percent,
               :calls_percent,
   						:bets_percent,
@@ -31,5 +31,6 @@ class UserSerializer < ActiveModel::Serializer
               :is_facebook_connected,
               :image_url, 
               :new_fb_user,
-              :image_url
+              :image_url,
+              :previous_login_token
 end

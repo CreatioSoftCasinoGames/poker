@@ -21,7 +21,7 @@ class Api::V1::TournamentConfigsController < Api::V1::ApplicationController
 				my_rank = 0
 				my_chips = 0
 				my_reward = 0
-				my_level = 0
+				my_level = ""
 			end
 		else
 			@tournament_users = @tournament_config.tournaments.active.first.tournament_users.order("chips desc").limit(300)
@@ -36,7 +36,7 @@ class Api::V1::TournamentConfigsController < Api::V1::ApplicationController
 				my_rank = 0
 				my_chips = 0
 				my_reward = 0
-				my_level = 0
+				my_level = ""
 			end
 		end
 		leader_board = @tournament_users.as_json({
