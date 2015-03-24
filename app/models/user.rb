@@ -87,7 +87,11 @@ class User < ActiveRecord::Base
   end
 
   def full_name
-    [first_name, last_name].join(" ")
+    if([first_name, last_name].compact.blank?)
+      email
+    else
+      [first_name, last_name].compact.join(" ")
+    end
   end
   
   def image_url 

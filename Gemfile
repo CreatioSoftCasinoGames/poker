@@ -6,6 +6,7 @@ gem 'active_model_serializers'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.4'
+gem 'will_paginate'
 # Use mysql as the database for Active Record
 gem 'mysql2'
 # Use SCSS for stylesheets

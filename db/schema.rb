@@ -269,9 +269,9 @@ ActiveRecord::Schema.define(version: 20150224093344) do
     t.integer  "num_friend_request",                              default: 0
     t.integer  "num_gift_request",                                default: 0
     t.boolean  "online",                                          default: false
+    t.boolean  "is_facebook_connected",                           default: false
     t.integer  "shootout_played",                                 default: 0
     t.integer  "sitandgo_played",                                 default: 0
-    t.boolean  "is_facebook_connected",                           default: false
     t.integer  "parent_id"
   end
 

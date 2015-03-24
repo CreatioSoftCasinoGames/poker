@@ -1,6 +1,8 @@
 require 'sidekiq/web'
 Rails.application.routes.draw do
 
+  resources :games
+
   resources :reward_and_levels
 
   resources :tournament_configs
