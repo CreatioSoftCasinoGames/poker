@@ -1,0 +1,29 @@
+.container
+  .row
+    .col-md-12
+      legend= @game.uuid
+      = @game.created_at
+    .col-md-6
+      legend Users
+      table.table.table-bordered.table-condensed
+        - @game.game_users.each do |game_user|
+           tr class=("success" if game_user.is_winner)
+            td= "#{game_user.user_id} -> #{game_user.user.full_name}"
+            td= game_user.seat_occcupied_index
+            td= game_user.round_chips
+
+    .col-md-6
+      legend Moves
+      table.table.table-bordered.table-condensed
+        thead
+          tr
+            th User
+            th Action
+            th Bet Amt.
+            th Rem. Chips
+        - @game.moves.each do |move|
+          tr
+            td= "#{move.user_id} -> #{move.user.full_name}"
+            td= move.action
+            td= move.bet_amount
+            td= move.remaining_chips

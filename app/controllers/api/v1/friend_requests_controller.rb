@@ -10,7 +10,8 @@ class Api::V1::FriendRequestsController < Api::V1::ApplicationController
 			render json: @friend_request
 		else
 			render json: {
-				errors: @friend_request.errors.full_messages.join(", ")
+				errors: @friend_request.errors.full_messages.join(", "),
+				success: false
 			}
 		end
 	end
@@ -20,7 +21,8 @@ class Api::V1::FriendRequestsController < Api::V1::ApplicationController
 			render json: @friend_request
 		else
 			render json: {
-				errors: @friend_request.errors.full_messages.join
+				errors: @friend_request.errors.full_messages.join,
+				success: false
 			}
 		end
 	end
@@ -48,7 +50,7 @@ class Api::V1::FriendRequestsController < Api::V1::ApplicationController
 
 	def get_friend_requests
 		@friend_request = FriendRequest.where(id: params[:id]).first
-		(render join: {message: "Friend request not found!", success: false}) if @friend_request.blank?
+		(render json: {message: "Friend request not found!", success: false}) if @friend_request.blank?
 	end
 
 end

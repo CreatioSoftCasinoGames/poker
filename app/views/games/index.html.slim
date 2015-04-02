@@ -1,0 +1,20 @@
+div class="page-header"
+  legend Games
+table class="table table-striped"
+  thead
+    tr
+      th UUID
+      th Created At
+      th=t '.actions', :default => t("helpers.actions")
+  tbody
+    - @games.each do |game|
+      tr
+        td= link_to game.uuid, game_path(game)
+        td=l game.created_at
+        td
+          = link_to t('.edit', :default => t("helpers.links.edit")), edit_game_path(game), :class => 'btn btn-default btn-xs'
+          '
+          = link_to t('.destroy', :default => t("helpers.links.destroy")), game_path(game), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-xs btn-danger'
+
+= link_to t('.new', :default => t("helpers.links.new")), new_game_path, :class => 'btn btn-primary'
+
